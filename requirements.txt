@@ -1,0 +1,4 @@
+discord
+proxmoxer
+urllib3
+requests
