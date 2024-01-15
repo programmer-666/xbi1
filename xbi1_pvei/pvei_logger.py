@@ -1,5 +1,6 @@
 # xbi1_pvei.pvei_logger.py
 import logging.config
+from typing import Callable
 from logging import getLogger
 from time import time
 
@@ -12,10 +13,10 @@ logger = getLogger(__name__)
 # not necessary, but if you want to use
 # you need to activate relating operation
 
-def get_log(function):
+def get_log(function) -> Callable:
     # this function creates a log output to logs/xbi1.log
     # n these logs you can see which classes and methods were called
-    def dec_f(*args):
+    def dec_f(*args) -> Callable:
         # global total_work_time
 
         decf_start_time: time = time()
@@ -38,5 +39,3 @@ def get_log(function):
 
         return f_var
     return dec_f
-
-# threads?

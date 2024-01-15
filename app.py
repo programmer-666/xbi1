@@ -8,6 +8,6 @@ def main_t():
     pvei.proxmox_version()
 
 
-thread = Thread(target=main_t)
+thread = Thread(target=main_t, name="main function", )
 thread.start()
 thread.join()
