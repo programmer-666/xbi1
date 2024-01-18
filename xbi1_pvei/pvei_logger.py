@@ -1,4 +1,5 @@
 # xbi1_pvei.pvei_logger.py
+# :scc:1:1002:
 import logging.config
 from typing import Callable
 from logging import getLogger
