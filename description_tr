@@ -1,0 +1,31 @@
+# Xbi1 Uygulaması
+	Xbi1 bir discord bot uygulamasıdır. Çeşitli yazılımlar ile
+	iletişime geçerek bir arayüz oluşturur ve bu arayüz
+	aracılığı ile discord kanallarına veri-bilgi aktarımı yapar.
+
+	Desteklediği yazılımlar;
+		- ProxmoxVE
+		- Veeam Backup
+		- URBackup
+		- GAPI (General API: ...)
+    
+    # Loglar
+	    Kendi içinde log almak için hazırlanmış *_logger.py dosyaları
+	    bulunmaktadır. Bu dosyalar ile çalışan kodların log kayıtları
+	    oluşturulur ve logs klasöründe saklanır. Log kayıtları xbi1
+	    her çalıştırıldığında silinir ve tekrardan yazılır.
+
+	# Sourcecode Check (SCC)
+		SCC, xbi1'de ilk denemelerinin yapıldığı, bir kaynak kod
+		kontrol mekanizmasıdır. Kaynak kod olan her dosyayı
+		hash verileriyle kaydeder.
+
+		Uygulama (SCC'nin kontrol ettiği...) her çalıştırıldığında
+		SCC log kayıtlarını toplar, sıkıştırır ve yedekler. Sonra
+		işaretlenmiş kaynak kodları bulur ve hash'lerini alır.
+		Çalıştığı sayı, tarih-saat ve hash bilgileri dahilinde
+		kaçıncı versiyonda çalıştığını kaydeder (daha önceden üret-
+		ilir). Bu işlemi geriye dönük bir şekilde veritabanında saklar.
+
+		SQLite veri saklama ihtiyacını yeterince karşılamaktadır. Veritabanı
+        olarak alternatifler tercih konusudur.

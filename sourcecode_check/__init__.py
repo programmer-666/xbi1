@@ -1,13 +1,7 @@
 #!/usr/bin/python3
 # sourcecode_check
 # :scc:3:1004:
-from os import walk
-from hashlib import sha1
-from configparser import ConfigParser
 
-
-config = ConfigParser()
-config.read('scc.conf')
 
 # find all python source code files
 # read first line for scMark

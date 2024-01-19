@@ -1,5 +1,6 @@
 {
     "source_code_paths": [
-        "../"
+        "../app.py",
+        "../__init__.py"
     ]
 }
