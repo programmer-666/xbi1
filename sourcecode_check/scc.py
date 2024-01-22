@@ -2,13 +2,12 @@
 # :scc:1:1005
 
 import sqlite3
-from sys import argv
 from pathlib import Path
 from json import load as jload
 from configparser import ConfigParser
 
-SCC_CONFIG_FILE: str = argv[1]
-SCC_PATHS_FILE: str = argv[2]
+SCC_CONFIG_FILE: str = 'scc.conf'  # argv[1]
+SCC_PATHS_FILE: str = 'scc_paths.json'  # argv[2]
 SCC_MAX_LINE: int = 10
 # SCC_MAX_LINE is checks files first 10 lines for scc code
 
@@ -72,6 +71,8 @@ if __name__ == '__main__':
     cursor.create_db()
 
     sourcecode_control()
+    # fill scc_sc_data
+
     cursor.insert_paths(scc_sc_data)
-    print(scc_sc_data)
     db_connection.commit()
+    # commit changes to database
