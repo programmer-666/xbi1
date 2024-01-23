@@ -1,6 +1,8 @@
 {
     "source_code_paths": [
         "../app.py",
-        "../__init__.py"
+        "../__init__.py",
+        "../xbi1_pvei/__init__.py",
+        "../xbi1_pvei/pvei_logger.py"
     ]
 }

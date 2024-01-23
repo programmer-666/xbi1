@@ -62,7 +62,7 @@ class SCQCursor(sqlite3.Cursor):
 
     def insert_paths(self, sc_data: list):
         self.executemany('INSERT OR IGNORE INTO source_codes \
-            (code_sc, path_sc, name_sc) VALUES (?, ?, ?)', sc_data)
+            (code_sc, path_sc, name_sc) VALUES (?, ?, ?);', sc_data)
 
 
 if __name__ == '__main__':
@@ -71,7 +71,7 @@ if __name__ == '__main__':
     cursor.create_db()
 
     sourcecode_control()
-    # fill scc_sc_data
+    # get data scc_sc_data
 
     cursor.insert_paths(scc_sc_data)
     db_connection.commit()
