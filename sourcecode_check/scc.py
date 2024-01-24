@@ -2,6 +2,7 @@
 # :scc:1:1005
 
 import sqlite3
+from os import stat
 from pathlib import Path
 from json import load as jload
 from configparser import ConfigParser
@@ -44,6 +45,10 @@ def sourcecode_control() -> None:
                                 in scc_code][0])
 
 
+def sourcecode_sc_inofs():
+    print([s for s in stat('../app.py')])
+
+
 class SCQlite(sqlite3.Connection):
     def cursor(self):
         return super(SCQlite, self).cursor(SCQCursor)
@@ -52,17 +57,17 @@ class SCQlite(sqlite3.Connection):
 class SCQCursor(sqlite3.Cursor):
     def create_db(self):
         self.execute('CREATE TABLE IF NOT EXISTS "source_codes" \
-                ("id_sc" integer NOT NULL, "path_sc" \
-                text NOT NULL, "name_sc" varchar NOT NULL DEFAULT NULL, \
-                "code_sc" varchar NOT NULL, PRIMARY KEY (id_sc));')
+                ("sc_id" integer NOT NULL, "sc_path" \
+                text NOT NULL, "sc_name" varchar NOT NULL DEFAULT NULL, \
+                "sc_code" varchar NOT NULL, PRIMARY KEY (sc_id));')
         # creating source_codes tables
         self.execute('CREATE UNIQUE INDEX IF NOT EXISTS \
-            path_sc_ix ON source_codes (path_sc);')
+            sc_path_ix ON source_codes (sc_path);')
         # indexes
 
     def insert_paths(self, sc_data: list):
         self.executemany('INSERT OR IGNORE INTO source_codes \
-            (code_sc, path_sc, name_sc) VALUES (?, ?, ?);', sc_data)
+            (sc_code, sc_path, sc_name) VALUES (?, ?, ?);', sc_data)
 
 
 if __name__ == '__main__':
@@ -76,3 +81,5 @@ if __name__ == '__main__':
     cursor.insert_paths(scc_sc_data)
     db_connection.commit()
     # commit changes to database
+
+    print(sourcecode_sc_inofs())
