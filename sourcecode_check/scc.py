@@ -4,6 +4,7 @@
 import sqlite3
 from os import stat
 from pathlib import Path
+from datetime import datetime
 from json import load as jload
 from configparser import ConfigParser
 
@@ -14,7 +15,7 @@ SCC_MAX_LINE: int = 10
 
 scc_paths: dict = None
 scc_sc_data: list = []
-
+scc_run_number: int = 1000
 
 config = ConfigParser()
 config.read(SCC_CONFIG_FILE)
@@ -47,8 +48,10 @@ def sourcecode_control() -> None:
 
 def sourcecode_sc_stats():
     sc_stats: list = []
+    c: int = 1
     for sc_element in scc_sc_data:
-        sc_stats.append(tuple(stat(sc_element[1])))
+        sc_stats.append(tuple((c,)+stat(sc_element[1])))
+        c = c + 1
     return sc_stats
 
 
@@ -89,7 +92,7 @@ class SCQCursor(sqlite3.Cursor):
                 FOREIGN KEY(sc_id)REFERENCES source_codes(sc_id));')
         # SC_FILE_STATS
         self.execute('CREATE TABLE IF NOT EXISTS "sc_version" \
-                ("sc_version_code" varchar NOT NULL, \
+                ("sc_version_code" int NOT NULL, \
                 "sc_version_c_datetime" datetime NOT NULL, \
                 PRIMARY KEY (sc_version_code));')
         # SC_VERSION
@@ -105,7 +108,19 @@ class SCQCursor(sqlite3.Cursor):
 
     def insert_stats(self, sc_stats: list):
         self.executemany('INSERT OR IGNORE INTO sc_file_stats \
-            (sc_code, sc_path, sc_name) VALUES (?, ?, ?);', sc_stats)
+            (sc_id,sc_file_stat_mode,sc_file_stat_ino,\
+            sc_file_stat_dev,sc_file_stat_nlink,sc_file_stat_uid,\
+            sc_file_stat_gid,sc_file_stat_size,sc_file_stat_atime,\
+            sc_file_stat_mtime,sc_file_stat_ctime) VALUES \
+            (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);', sc_stats)
+
+    def truncate_stats(self):
+        self.execute('TRUNCATE TABLE sc_file_stats')
+
+    def insert_version(self):
+        self.execute('INSERT OR IGNORE INTO sc_version\
+            (sc_version_c_datetime) VALUES\
+            (?)', (datetime.now().strftime('%F %T')))
 
 
 if __name__ == '__main__':
@@ -117,7 +132,9 @@ if __name__ == '__main__':
     # get data scc_sc_data
 
     cursor.insert_paths(scc_sc_data)
-    db_connection.commit()
     # commit changes to database
 
-    print(sourcecode_sc_stats())
+    # print(sourcecode_sc_stats())
+    cursor.insert_stats(sourcecode_sc_stats())
+    cursor.insert_version()
+    db_connection.commit()
