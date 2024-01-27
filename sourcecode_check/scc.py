@@ -47,10 +47,15 @@ def sourcecode_control() -> None:
 
 
 def sourcecode_sc_stats():
+    # this function gets stats of related source code
+    # c is a counter variable for source codes
+    # i think its littli bit sus but its work for now...
+    # returns a compatible tuple for sqlite queries
+    # insade tuple; c as id and stats
     sc_stats: list = []
-    c: int = 1
+    c: int = 1  # sus
     for sc_element in scc_sc_data:
-        sc_stats.append(tuple((c,)+stat(sc_element[1])))
+        sc_stats.append(tuple((c,) + stat(sc_element[1])))
         c = c + 1
     return sc_stats
 
@@ -92,7 +97,7 @@ class SCQCursor(sqlite3.Cursor):
                 FOREIGN KEY(sc_id)REFERENCES source_codes(sc_id));')
         # SC_FILE_STATS
         self.execute('CREATE TABLE IF NOT EXISTS "sc_version" \
-                ("sc_version_code" int NOT NULL, \
+                ("sc_version_code" integer NOT NULL, \
                 "sc_version_c_datetime" datetime NOT NULL, \
                 PRIMARY KEY (sc_version_code));')
         # SC_VERSION
@@ -103,10 +108,13 @@ class SCQCursor(sqlite3.Cursor):
         # indexes
 
     def insert_paths(self, sc_data: list):
+        # adding source code paths to related table
         self.executemany('INSERT OR IGNORE INTO source_codes \
             (sc_code, sc_path, sc_name) VALUES (?, ?, ?);', sc_data)
 
     def insert_stats(self, sc_stats: list):
+        # inserts all stats of source code path
+        # except id, id is auto increment
         self.executemany('INSERT OR IGNORE INTO sc_file_stats \
             (sc_id,sc_file_stat_mode,sc_file_stat_ino,\
             sc_file_stat_dev,sc_file_stat_nlink,sc_file_stat_uid,\
@@ -114,13 +122,16 @@ class SCQCursor(sqlite3.Cursor):
             sc_file_stat_mtime,sc_file_stat_ctime) VALUES \
             (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);', sc_stats)
 
-    def truncate_stats(self):
-        self.execute('TRUNCATE TABLE sc_file_stats')
+    # def truncate_stats(self):
+    #    self.execute('TRUNCATE TABLE sc_file_stats')
+    # truncate function not necessary for now
 
     def insert_version(self):
-        self.execute('INSERT OR IGNORE INTO sc_version\
+        # version is scc's run code
+        # unique value and auto increment
+        self.execute('INSERT INTO sc_version\
             (sc_version_c_datetime) VALUES\
-            (?)', (datetime.now().strftime('%F %T')))
+            (?)', (datetime.now().strftime('%F %T'),))
 
 
 if __name__ == '__main__':
