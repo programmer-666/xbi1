@@ -46,7 +46,7 @@ def sourcecode_control() -> None:
                                 in scc_code][0])
 
 
-def sourcecode_sc_stats():
+def sourcecode_sc_stats(last_vcode: int = -1):
     # this function gets stats of related source code
     # c is a counter variable for source codes
     # i think its littli bit sus but its work for now...
@@ -55,7 +55,7 @@ def sourcecode_sc_stats():
     sc_stats: list = []
     c: int = 1  # sus
     for sc_element in scc_sc_data:
-        sc_stats.append(tuple((c,) + stat(sc_element[1])))
+        sc_stats.append(tuple((last_vcode,) + (c,) + stat(sc_element[1])))
         c = c + 1
     return sc_stats
 
@@ -83,6 +83,7 @@ class SCQCursor(sqlite3.Cursor):
         # SOURCE_CODES
         self.execute('CREATE TABLE IF NOT EXISTS "sc_file_stats" \
                 ("sc_file_stat_id" integer NOT NULL PRIMARY KEY,\
+                "sc_version_code" integer, \
                 "sc_id" integer NOT NULL,\
                 "sc_file_stat_mode" bigint NOT NULL,\
                 "sc_file_stat_ino" bigint NOT NULL,\
@@ -101,6 +102,14 @@ class SCQCursor(sqlite3.Cursor):
                 "sc_version_c_datetime" datetime NOT NULL, \
                 PRIMARY KEY (sc_version_code));')
         # SC_VERSION
+        # self.execute('CREATE TABLE IF NOT EXISTS "sc_fv_log" \
+        #         ("scfvl_id" int NOT NULL PRIMARY KEY, \
+        #         "sc_file_stat_id" INT NOT NULL, \
+        #         "sc_version_code" int NOT NULL, \
+        #         FOREIGN KEY(sc_file_stat_id) REFERENCES \
+        #         sc_file_stats(sc_file_stat_id),FOREIGN \
+        #         KEY(sc_version_code)REFERENCES sc_version(sc_version_code))')
+        # SC_FV_LOG - dont need this anymore
         self.execute('CREATE UNIQUE INDEX IF NOT EXISTS \
                 sc_path_ix ON source_codes (sc_path);')
         self.execute('CREATE UNIQUE INDEX IF NOT EXISTS \
@@ -112,15 +121,21 @@ class SCQCursor(sqlite3.Cursor):
         self.executemany('INSERT OR IGNORE INTO source_codes \
             (sc_code, sc_path, sc_name) VALUES (?, ?, ?);', sc_data)
 
-    def insert_stats(self, sc_stats: list):
+    def insert_stats(self):
         # inserts all stats of source code path
         # except id, id is auto increment
+        last_vcode: int = self.execute('SELECT sc_version.sc_version_code \
+            FROM sc_version \
+            ORDER BY sc_version.sc_version_c_datetime \
+            DESC LIMIT 1;').fetchone()[0]
+        sc_stats: list = sourcecode_sc_stats(last_vcode)
+
         self.executemany('INSERT OR IGNORE INTO sc_file_stats \
-            (sc_id,sc_file_stat_mode,sc_file_stat_ino,\
+            (sc_version_code,sc_id,sc_file_stat_mode,sc_file_stat_ino,\
             sc_file_stat_dev,sc_file_stat_nlink,sc_file_stat_uid,\
             sc_file_stat_gid,sc_file_stat_size,sc_file_stat_atime,\
             sc_file_stat_mtime,sc_file_stat_ctime) VALUES \
-            (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);', sc_stats)
+            (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);', sc_stats)
 
     # def truncate_stats(self):
     #    self.execute('TRUNCATE TABLE sc_file_stats')
@@ -133,11 +148,18 @@ class SCQCursor(sqlite3.Cursor):
             (sc_version_c_datetime) VALUES\
             (?)', (datetime.now().strftime('%F %T'),))
 
+    def insert_file_version_log(self):
+        # son kaydedilen file statlar
+        # son kaydedilen code
+        pass
+
 
 if __name__ == '__main__':
     db_connection: SCQlite = sqlite3.connect('scc.db', factory=SCQlite)
     cursor = db_connection.cursor()
     cursor.create_db()
+
+    cursor.insert_version()
 
     sourcecode_control()
     # get data scc_sc_data
@@ -146,6 +168,5 @@ if __name__ == '__main__':
     # commit changes to database
 
     # print(sourcecode_sc_stats())
-    cursor.insert_stats(sourcecode_sc_stats())
-    cursor.insert_version()
+    cursor.insert_stats()
     db_connection.commit()
