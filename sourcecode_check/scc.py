@@ -148,11 +148,6 @@ class SCQCursor(sqlite3.Cursor):
             (sc_version_c_datetime) VALUES\
             (?)', (datetime.now().strftime('%F %T'),))
 
-    def insert_file_version_log(self):
-        # son kaydedilen file statlar
-        # son kaydedilen code
-        pass
-
 
 if __name__ == '__main__':
     db_connection: SCQlite = sqlite3.connect('scc.db', factory=SCQlite)
