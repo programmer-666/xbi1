@@ -1,12 +1,12 @@
 # scc.py
 # :scc:1:1005
 
-import sqlite3
 from os import stat
 from pathlib import Path
 from datetime import datetime
 from json import load as jload
 from configparser import ConfigParser
+from sqlite3 import Cursor, Connection, connect
 
 SCC_CONFIG_FILE: str = 'sourcecode_check/scc.conf'  # argv[1]
 SCC_PATHS_FILE: str = 'sourcecode_check/scc_paths.json'  # argv[2]
@@ -61,7 +61,7 @@ def sourcecode_sc_stats(last_vcode: int = -1):
     return sc_stats
 
 
-class SCQlite(sqlite3.Connection):
+class SCQlite(Connection):
     # Custom SQLite3 inheritence for scc.db
     # It was defined to define the methods to
     # be used with the cursor and to simplify operations.
@@ -69,7 +69,7 @@ class SCQlite(sqlite3.Connection):
         return super(SCQlite, self).cursor(SCQCursor)
 
 
-class SCQCursor(sqlite3.Cursor):
+class SCQCursor(Cursor):
     # Cursor
     def create_db(self):
         # Cursor has few methods for creating and managing scc.db
@@ -151,7 +151,7 @@ class SCQCursor(sqlite3.Cursor):
 
 
 def activate_scc():
-    db_connection: SCQlite = sqlite3.connect(SCC_DB, factory=SCQlite)
+    db_connection: SCQlite = connect(SCC_DB, factory=SCQlite)
     cursor = db_connection.cursor()
     cursor.create_db()
 
