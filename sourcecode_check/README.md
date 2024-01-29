@@ -21,3 +21,5 @@ how many times the application was run and on what date and time it was run.
 Along with this data, it reads the details about the source codes and includes
 them in the database. This process repeats every time the code runs and the
 data is stored in the database.
+
+<img width="500" alt="image" src="https://github.com/programmer-666/xbi1/assets/34501436/d1ab8821-ad72-4e57-88cd-9002520f32b8">
