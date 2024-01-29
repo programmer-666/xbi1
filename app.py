@@ -3,6 +3,10 @@
 # :scc:1:1001:
 from __init__ import pvei
 from threading import Thread
+from sourcecode_check import scc
+
+
+scc.activate_scc()
 
 
 def main_t():

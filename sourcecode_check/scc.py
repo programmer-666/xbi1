@@ -8,8 +8,9 @@ from datetime import datetime
 from json import load as jload
 from configparser import ConfigParser
 
-SCC_CONFIG_FILE: str = 'scc.conf'  # argv[1]
-SCC_PATHS_FILE: str = 'scc_paths.json'  # argv[2]
+SCC_CONFIG_FILE: str = 'sourcecode_check/scc.conf'  # argv[1]
+SCC_PATHS_FILE: str = 'sourcecode_check/scc_paths.json'  # argv[2]
+SCC_DB: str = 'sourcecode_check/scc.db'
 SCC_MAX_LINE: int = 10
 # SCC_MAX_LINE is checks files first 10 lines for scc code
 
@@ -24,7 +25,7 @@ config.read(SCC_CONFIG_FILE)
 
 with open(SCC_PATHS_FILE, 'r', encoding='utf-8') as paths_file:
     # read source code paths from json file
-    # paths can be relative or absolute
+    # needs absolute paths
     scc_paths = jload(paths_file)
 
 
@@ -149,6 +150,25 @@ class SCQCursor(sqlite3.Cursor):
             (?)', (datetime.now().strftime('%F %T'),))
 
 
+def activate_scc():
+    db_connection: SCQlite = sqlite3.connect(SCC_DB, factory=SCQlite)
+    cursor = db_connection.cursor()
+    cursor.create_db()
+
+    cursor.insert_version()
+
+    sourcecode_control()
+    # get data scc_sc_data
+
+    cursor.insert_paths(scc_sc_data)
+    # commit changes to database
+
+    # print(sourcecode_sc_stats())
+    cursor.insert_stats()
+    db_connection.commit()
+
+
+"""
 if __name__ == '__main__':
     db_connection: SCQlite = sqlite3.connect('scc.db', factory=SCQlite)
     cursor = db_connection.cursor()
@@ -165,3 +185,4 @@ if __name__ == '__main__':
     # print(sourcecode_sc_stats())
     cursor.insert_stats()
     db_connection.commit()
+"""
