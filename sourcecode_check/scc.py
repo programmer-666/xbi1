@@ -103,14 +103,6 @@ class SCQCursor(Cursor):
                 "sc_version_c_datetime" datetime NOT NULL, \
                 PRIMARY KEY (sc_version_code));')
         # SC_VERSION
-        # self.execute('CREATE TABLE IF NOT EXISTS "sc_fv_log" \
-        #         ("scfvl_id" int NOT NULL PRIMARY KEY, \
-        #         "sc_file_stat_id" INT NOT NULL, \
-        #         "sc_version_code" int NOT NULL, \
-        #         FOREIGN KEY(sc_file_stat_id) REFERENCES \
-        #         sc_file_stats(sc_file_stat_id),FOREIGN \
-        #         KEY(sc_version_code)REFERENCES sc_version(sc_version_code))')
-        # SC_FV_LOG - dont need this anymore
         self.execute('CREATE UNIQUE INDEX IF NOT EXISTS \
                 sc_path_ix ON source_codes (sc_path);')
         self.execute('CREATE UNIQUE INDEX IF NOT EXISTS \
@@ -138,10 +130,6 @@ class SCQCursor(Cursor):
             sc_file_stat_mtime,sc_file_stat_ctime) VALUES \
             (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);', sc_stats)
 
-    # def truncate_stats(self):
-    #    self.execute('TRUNCATE TABLE sc_file_stats')
-    # truncate function not necessary for now
-
     def insert_version(self):
         # version is scc's run code
         # unique value and auto increment
@@ -166,23 +154,3 @@ def activate_scc():
     # print(sourcecode_sc_stats())
     cursor.insert_stats()
     db_connection.commit()
-
-
-"""
-if __name__ == '__main__':
-    db_connection: SCQlite = sqlite3.connect('scc.db', factory=SCQlite)
-    cursor = db_connection.cursor()
-    cursor.create_db()
-
-    cursor.insert_version()
-
-    sourcecode_control()
-    # get data scc_sc_data
-
-    cursor.insert_paths(scc_sc_data)
-    # commit changes to database
-
-    # print(sourcecode_sc_stats())
-    cursor.insert_stats()
-    db_connection.commit()
-"""
