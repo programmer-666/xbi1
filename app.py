@@ -10,6 +10,6 @@ from sourcecode_check import scc
 scc_thread = Thread(target=scc.activate_scc, name='SCC Thread')
 scc_thread.start()
 
-pvei.proxmox_version()
-pvei.basic_information()
+# pvei.proxmox_version()
+# pvei.basic_information()
 pvei.basic_status()
