@@ -12,4 +12,4 @@ scc_thread.start()
 
 # pvei.proxmox_version()
 # pvei.basic_information()
-pvei.basic_status()
+print(pvei.basic_status())

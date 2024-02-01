@@ -27,7 +27,7 @@ class PVEInterface:
         return self.__pmox_api.version.get()
 
     @get_log
-    def basic_information(self):
+    def basic_information(self) -> dict:
         # this function returns selected node's
         # maximum cpu, memory and disk usage
         basic_info = self.__pmox_api.nodes.get()[0]
@@ -39,7 +39,7 @@ class PVEInterface:
         }
 
     @get_log
-    def basic_status(self):
+    def basic_status(self) -> dict:
         # Returns status of node.
         disks = [
             {
