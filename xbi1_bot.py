@@ -1,5 +1,6 @@
-# xbi1_dcbot.__init__.py
+# xbi1_bot.py
 # :scc:2:1003:
+
 import discord
 from discord.ext import commands
 
@@ -15,6 +16,3 @@ async def test(ctx: commands.context.Context, *args):
     await ctx.send(
         embed=discord.Embed(title='Test', description=' '.join(args))
     )
-
-
-bot.run('JhiUtVk_BesWqfQG8SzVfp0AY_5YRjgHVA')
