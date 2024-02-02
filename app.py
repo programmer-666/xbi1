@@ -27,7 +27,7 @@ scc_thread.start()
 @bot.command(name='test')
 async def test(ctx: commands.context.Context, *args):
     await ctx.send(
-        embed=discord.Embed(title='Test', description=dumps(pvei.basic_information()))
+        embed=discord.Embed(title='Test', colour=discord.Color.yellow(), description='```' + dumps(pvei.basic_information(), indent=4) + '```')
     )
 
 
