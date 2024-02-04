@@ -5,7 +5,6 @@
 import discord
 from discord.ext import commands
 from json import dumps
-from xbi1_pvei import pvei_logger
 from __init__ import pvei, config
 from threading import Thread
 from sourcecode_check import scc
