@@ -31,7 +31,9 @@ async def testloop1():
 
 @bot.event
 async def on_ready():
-    pass
+    sct_guild = bot.get_guild(1182784272403267684)
+    for cat in sct_guild.categories:
+        print(cat)
     # testloop1.start()
 
 
