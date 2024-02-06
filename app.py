@@ -21,17 +21,18 @@ intents = discord.Intents.default()
 intents.message_content = True
 
 bot = commands.Bot(command_prefix='.', intents=intents)
+client = discord.Client(intents=intents)
 
 
-@tasks.loop(seconds=1)
+@tasks.loop(seconds=30)
 async def testloop1():
-    await bot.get_channel(1182785923910471691).send('?')
-
+    await bot.get_channel(1182785923910471691).send(embed=pveiembeds.em_basic_status(pvei.basic_status()))
 
 
 @bot.event
 async def on_ready():
-    testloop1.start()
+    pass
+    # testloop1.start()
 
 
 @bot.command(name='b_status')
