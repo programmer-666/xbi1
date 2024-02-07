@@ -19,7 +19,11 @@ class PVEInterface:
         # still a beta code on test stage
         # self.node gets first node from ProxmoxVE
         self.__pmox_api = proxmox_api
-        self.node = self.__pmox_api.nodes.get()[0]['node']
+        self.node = self.__pmox_api.nodes.get()[0]
+
+    @get_log
+    def change_node(self, node_id: int = 0) -> None:
+        self.__pmox_api.nodes.get()[node_id]
 
     @get_log
     def proxmox_version(self):
@@ -30,7 +34,7 @@ class PVEInterface:
     def basic_information(self) -> dict:
         # this function returns selected node's
         # maximum cpu, memory and disk usage
-        basic_info = self.__pmox_api.nodes.get()[0]
+        basic_info = self.node  # self.__pmox_api.nodes.get()[0]
         return {
             'id': basic_info['id'],
             'maxcpu': basic_info['maxcpu'],
@@ -41,13 +45,14 @@ class PVEInterface:
     @get_log
     def basic_status(self) -> dict:
         # Returns status of node.
+        node = self.node['node']
         disks = [
             {
                 'model': disk['model'],
                 'size': disk['size'],
                 'type': disk['type']
             }
-            for disk in self.__pmox_api.nodes(self.node).disks.list.get()
+            for disk in self.__pmox_api.nodes(node).disks.list.get()
         ]
 
         qemus = [
@@ -62,10 +67,10 @@ class PVEInterface:
                 'cpus': qemu['cpus'],
                 'maxdisk': qemu['maxdisk'],
             }
-            for qemu in self.__pmox_api.nodes(self.node).qemu.get()
+            for qemu in self.__pmox_api.nodes(node).qemu.get()
         ]
 
-        temp = self.__pmox_api.nodes(self.node).status.get()
+        temp = self.__pmox_api.nodes(node).status.get()
         cpu_info = dict(temp['cpuinfo'])
         cpu_info.pop('flags', None)
         node = {
@@ -76,7 +81,7 @@ class PVEInterface:
         del temp, cpu_info
 
         return {
-            'node': node,
+            self.node['node']: node,
             'VMs': qemus,
             'disks': disks
         }

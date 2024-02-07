@@ -2,6 +2,7 @@
 # app.py
 # :scc:1:1001:
 
+import json
 import discord
 from threading import Thread
 from sourcecode_check import scc
@@ -10,31 +11,36 @@ from emb_messages import pveiembeds
 from discord.ext import commands, tasks
 
 
-scc_thread = Thread(target=scc.activate_scc, name='SCC Thread')
+scc_thread = Thread(
+    target=scc.activate_scc,
+    name='SCC Thread'
+)
+
 scc_thread.start()
 
-# pvei.proxmox_version()
-# pvei.basic_information()
-# print(pvei.basic_status())
+with open('dc_ids.json') as dcj_file:
+    dc_ids: dict = json.load(dcj_file)
 
 intents = discord.Intents.default()
 intents.message_content = True
 
 bot = commands.Bot(command_prefix='.', intents=intents)
-client = discord.Client(intents=intents)
 
 
-@tasks.loop(seconds=30)
+@tasks.loop(seconds=60)
 async def testloop1():
-    await bot.get_channel(1182785923910471691).send(embed=pveiembeds.em_basic_status(pvei.basic_status()))
+    notf_channel = bot.get_channel(dc_ids['guild']['id_notfc'])
+
+    await notf_channel.send(
+        embed=pveiembeds.em_basic_status(
+            pvei.basic_status()
+        )
+    )
 
 
 @bot.event
 async def on_ready():
-    sct_guild = bot.get_guild(1182784272403267684)
-    for cat in sct_guild.categories:
-        print(cat)
-    # testloop1.start()
+    testloop1.start()
 
 
 @bot.command(name='b_status')
