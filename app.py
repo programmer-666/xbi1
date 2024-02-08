@@ -29,13 +29,16 @@ bot = commands.Bot(command_prefix='.', intents=intents)
 
 @tasks.loop(seconds=60)
 async def testloop1():
-    notf_channel = bot.get_channel(dc_ids['guild']['id_notfc'])
+    for guild in list(dc_ids):
+        notf_channel = bot.get_channel(dc_ids[guild]['id_notfc'])
 
-    await notf_channel.send(
-        embed=pveiembeds.em_basic_status(
-            pvei.basic_status()
+        await notf_channel.send(
+            embed=pveiembeds.em_basic_status(
+                pvei.basic_status()
+            )
         )
-    )
+
+        break
 
 
 @bot.event
