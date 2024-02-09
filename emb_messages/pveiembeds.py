@@ -1,4 +1,4 @@
-# embeds.py
+# pveiembeds.py
 
 from json import dumps
 from discord import Embed
@@ -22,66 +22,70 @@ def sec_to_datetime(seconds):
     return str(timedelta(seconds=seconds))
 
 
-def code_mark(dict_data: dict):
-    return '```' + str(dumps(dict_data, indent=4)) + '```'
+def em_basic_all_status(pvei_data: dict):
+    def node_field(node_dict: dict):
+        result: str = ''
+        for nodep in node_dict:
+            tmp: str = ''
+            tmp += '- **' + str(nodep).title() + '**\n'
+            for nodeps in node_dict[nodep]:
+                tmp += ' - **' + str(nodeps).title() + '**: '
+                if str(nodep) in ['rootfs', 'memory']:
+                    tmp += str(togigabyte(node_dict[nodep][nodeps])) + '\n'
+                else:
+                    tmp += str(node_dict[nodep][nodeps]) + '\n'
+            result += tmp + '\n'
 
+        return result
 
-def node_field(node_dict: dict):
-    result: str = ''
-    for nodep in node_dict:
-        tmp: str = ''
-        tmp += '- **' + str(nodep).title() + '**\n'
-        for nodeps in node_dict[nodep]:
-            tmp += ' - **' + str(nodeps).title() + '**: '
-            if str(nodep) in ['rootfs', 'memory']:
-                tmp += str(togigabyte(node_dict[nodep][nodeps])) + '\n'
-            else:
-                tmp += str(node_dict[nodep][nodeps]) + '\n'
-        result += tmp + '\n'
+    def vm_lxc_field(vm_dict: dict):
+        result: str = ''
 
-    return result
+        for vm in vm_dict:
+            result += '- **[ ' + str(vm['vmid']) + ':' + vm['name'] + ' ]**\n'
 
+            result += ' - **Status:** ' + str(vm['status']) + '\n'
+            result += ' - **Uptime:** ' + str(sec_to_datetime(vm['uptime'])) + '\n'
+            result += ' - **CPU:** ' + str(round(vm['cpu'], 2)) + '%\n'
 
-def virtual_machines_field(vm_dict: dict):
-    result: str = ''
+            result += ' - **Memory:** ' + str(avg_mem(vm['mem'], vm['maxmem'])) + '%'
+            result += ' (' + str(togigabyte(vm['mem']))
+            result += '/' + str(togigabyte(vm['maxmem'])) + ')\n'
 
-    for vm in vm_dict:
-        result += '- **[' + str(vm['vmid']) + ':' + vm['name'] + ']**\n'
+            result += ' - **CPUs:** ' + str(vm['cpus']) + '\n'
+            result += ' - **MaxDisk:** ' + str(togigabyte(vm['maxdisk'])) + '\n'
 
-        result += ' - **Status:** ' + str(vm['status']) + '\n'
-        result += ' - **Uptime:** ' + str(sec_to_datetime(vm['uptime'])) + '\n'
-        result += ' - **CPU:** ' + str(round(vm['cpu'], 2)) + '%\n'
+            result += ' - **DiskWrite:** ' + str(vm['diskwrite']) + '\n'
+            result += ' - **DiskRead:** ' + str(vm['diskread']) + '\n'
 
-        result += ' - **Memory:** ' + str(avg_mem(vm['mem'], vm['maxmem'])) + '%'
-        result += ' (' + str(togigabyte(vm['mem']))
-        result += '/' + str(togigabyte(vm['maxmem'])) + ')\n'
+            result += ' - **NetIn:** ' + str(vm['netin']) + '\n'
+            result += ' - **NetOut:** ' + str(vm['netout']) + '\n\n'
 
-        result += ' - **CPUs:** ' + str(vm['cpus']) + '\n'
-        result += ' - **MaxDisk:** ' + str(togigabyte(vm['maxdisk'])) + '\n\n'
+        return result
 
-    return result
+    def disks_field(disk_dict: dict):
+        result: str = ''
 
+        for disk in disk_dict:
+            result += '- **' + str(disk['model']) + '**\n'
+            result += ' - **Size: **' + str(togigabyte(disk['size'])) + '\n'
+            result += ' - **Type: **' + str(disk['type']) + '\n'
+            result += ' - **RPM: **' + str(disk['rpm']) + '\n'
+            result += ' - **Vendor: **' + str(disk['vendor']) + '\n'
+            result += ' - **Health: **' + str(disk['health']) + '\n'
+            result += ' - **GPT: **' + str(disk['gpt']) + '\n'
+            result += ' - **Used: **' + str(disk['used']) + '\n\n'
 
-def disks_field(disk_dict: dict):
-    result: str = ''
+        return result
 
-    for disk in disk_dict:
-        result += '- **' + str(disk['model']) + '**\n'
-        result += ' - **Size: **' + str(togigabyte(disk['size'])) + '\n'
-        result += ' - **Type: **' + str(disk['type']) + '\n\n'
-
-    return result
-
-
-def em_basic_status(pvei_data: dict):
     embed = Embed(
         title=list(pvei_data)[0],
         url=pvei_url,
-        description='Basic Status',
+        description='Basic All Status',
         colour=0xc65059,
         timestamp=datetime.now()
     )
-    
+
     embed.set_author(
         name='XBI1 - Notification Bot',
         url=author_url,
@@ -95,7 +99,12 @@ def em_basic_status(pvei_data: dict):
     )
     embed.add_field(
         name='Virtual Machines',
-        value=virtual_machines_field(pvei_data[list(pvei_data)[1]]),
+        value=vm_lxc_field(pvei_data[list(pvei_data)[1]]),
+        inline=False
+    )
+    embed.add_field(
+        name='LXCs',
+        value=vm_lxc_field(pvei_data[list(pvei_data)[3]]),
         inline=False
     )
     embed.add_field(

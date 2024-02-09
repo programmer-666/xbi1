@@ -28,28 +28,26 @@ bot = commands.Bot(command_prefix='.', intents=intents)
 
 
 @tasks.loop(seconds=60)
-async def testloop1():
+async def basic_all_status_loop():
     for guild in list(dc_ids):
         notf_channel = bot.get_channel(dc_ids[guild]['id_notfc'])
 
         await notf_channel.send(
-            embed=pveiembeds.em_basic_status(
-                pvei.basic_status()
+            embed=pveiembeds.em_basic_all_status(
+                pvei.basic_all_status()
             )
         )
-
-        break
 
 
 @bot.event
 async def on_ready():
-    testloop1.start()
+    basic_all_status_loop.start()
 
 
 @bot.command(name='b_status')
-async def basic_status_report(ctx: commands.context.Context, *args):
+async def basic_all_status_report(ctx: commands.context.Context, *args):
     await ctx.send(
-        embed=pveiembeds.em_basic_status(pvei.basic_status())
+        embed=pveiembeds.em_basic_all_status(pvei.basic_all_status())
     )
 
 
