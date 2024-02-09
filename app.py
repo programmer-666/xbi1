@@ -5,11 +5,12 @@
 import json
 import discord
 from threading import Thread
+from datetime import datetime
 from sourcecode_check import scc
 from __init__ import pvei, config
 from emb_messages import pveiembeds
 from discord.ext import commands, tasks
-
+from atimers.async_timers import minutely_do
 
 scc_thread = Thread(
     target=scc.activate_scc,
@@ -26,17 +27,36 @@ intents.message_content = True
 
 bot = commands.Bot(command_prefix='.', intents=intents)
 
+dtime = datetime.now()
 
-@tasks.loop(seconds=60)
+
+@tasks.loop(seconds=1)
 async def basic_all_status_loop():
-    for guild in list(dc_ids):
-        notf_channel = bot.get_channel(dc_ids[guild]['id_notfc'])
+    global dtime
 
-        await notf_channel.send(
-            embed=pveiembeds.em_basic_all_status(
-                pvei.basic_all_status()
+    if datetime.now().hour > dtime.hour:
+        dtime = datetime.now()
+
+        await bot.wait_until_ready()
+        for guild in list(dc_ids):
+            notf_channel = bot.get_channel(dc_ids[guild]['id_notfc'])
+
+            await notf_channel.send(
+                embed=pveiembeds.em_basic_all_status(
+                    pvei.basic_all_status()
+                )
             )
-        )
+
+    if datetime.now().minute > dtime.minute:
+        dtime = datetime.now()
+        await bot.wait_until_ready()
+        for guild in list(dc_ids):
+            notf_channel = bot.get_channel(dc_ids[guild]['id_notfc'])
+            await notf_channel.send(
+                embed=pveiembeds.em_basic_all_status(
+                    pvei.basic_all_status()
+                )
+            )
 
 
 @bot.event
