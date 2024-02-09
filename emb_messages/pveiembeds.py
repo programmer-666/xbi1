@@ -26,7 +26,23 @@ def code_mark(dict_data: dict):
     return '```' + str(dumps(dict_data, indent=4)) + '```'
 
 
-def virtual_machines(vm_dict: dict):
+def node_field(node_dict: dict):
+    result: str = ''
+    for nodep in node_dict:
+        tmp: str = ''
+        tmp += '- **' + str(nodep).title() + '**\n'
+        for nodeps in node_dict[nodep]:
+            tmp += ' - **' + str(nodeps).title() + '**: '
+            if str(nodep) in ['rootfs', 'memory']:
+                tmp += str(togigabyte(node_dict[nodep][nodeps])) + '\n'
+            else:
+                tmp += str(node_dict[nodep][nodeps]) + '\n'
+        result += tmp + '\n'
+
+    return result
+
+
+def virtual_machines_field(vm_dict: dict):
     result: str = ''
 
     for vm in vm_dict:
@@ -46,6 +62,17 @@ def virtual_machines(vm_dict: dict):
     return result
 
 
+def disks_field(disk_dict: dict):
+    result: str = ''
+
+    for disk in disk_dict:
+        result += '- **' + str(disk['model']) + '**\n'
+        result += ' - **Size: **' + str(togigabyte(disk['size'])) + '\n'
+        result += ' - **Type: **' + str(disk['type']) + '\n\n'
+
+    return result
+
+
 def em_basic_status(pvei_data: dict):
     embed = Embed(
         title=list(pvei_data)[0],
@@ -54,7 +81,7 @@ def em_basic_status(pvei_data: dict):
         colour=0xc65059,
         timestamp=datetime.now()
     )
-
+    
     embed.set_author(
         name='XBI1 - Notification Bot',
         url=author_url,
@@ -63,17 +90,17 @@ def em_basic_status(pvei_data: dict):
 
     embed.add_field(
         name='Node',
-        value=code_mark(pvei_data[list(pvei_data)[0]]),
+        value=node_field(pvei_data[list(pvei_data)[0]]),
         inline=False
     )
     embed.add_field(
         name='Virtual Machines',
-        value=virtual_machines(pvei_data[list(pvei_data)[1]]),
+        value=virtual_machines_field(pvei_data[list(pvei_data)[1]]),
         inline=False
     )
     embed.add_field(
         name='Disks',
-        value=code_mark(pvei_data[list(pvei_data)[2]]),
+        value=disks_field(pvei_data[list(pvei_data)[2]]),
         inline=False
     )
 
