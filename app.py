@@ -10,7 +10,7 @@ from sourcecode_check import scc
 from __init__ import pvei, config
 from emb_messages import pveiembeds
 from discord.ext import commands, tasks
-from atimers.async_timers import minutely_do
+
 
 scc_thread = Thread(
     target=scc.activate_scc,
@@ -50,6 +50,7 @@ async def basic_all_status_loop():
     if datetime.now().minute > dtime.minute:
         dtime = datetime.now()
         await bot.wait_until_ready()
+
         for guild in list(dc_ids):
             notf_channel = bot.get_channel(dc_ids[guild]['id_notfc'])
             await notf_channel.send(
@@ -61,7 +62,8 @@ async def basic_all_status_loop():
 
 @bot.event
 async def on_ready():
-    basic_all_status_loop.start()
+    pass
+    # basic_all_status_loop.start()
 
 
 @bot.command(name='b_status')
@@ -70,5 +72,20 @@ async def basic_all_status_report(ctx: commands.context.Context, *args):
         embed=pveiembeds.em_basic_all_status(pvei.basic_all_status())
     )
 
+
+@bot.command(name='b_information')
+async def basic_information_report(ctx: commands.context.Context, *args):
+    await ctx.send(
+        embed=pveiembeds.em_basic_information(pvei.basic_information())
+    )
+
+
+@bot.command(name='machines')
+async def all_lxcs(ctx: commands.context.Context, *args):
+    await ctx.send(
+        embed=pveiembeds.em_all_machines(
+            pvei.all_machines()
+        )
+    )
 
 bot.run(config['DISCORD']['bot_token'])

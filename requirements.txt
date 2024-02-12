@@ -2,3 +2,4 @@ discord==2.3.2
 proxmoxer==2.0.1
 urllib3==2.1.0
 requests==2.31.0
+table2ascii==1.1.3

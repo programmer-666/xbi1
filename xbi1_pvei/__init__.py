@@ -93,3 +93,36 @@ class PVEInterface:
             'disks': disks,
             'lxcs': lxcs
         }
+
+    @get_log
+    def all_machines(self):
+        qemus: list = [
+            {
+                'vmid': qemu['vmid'],
+                'name': qemu['name'],
+                'status': qemu['status'],
+                'cpu': qemu['cpu'],
+                'cpus': qemu['cpus'],
+                'uptime': qemu['uptime'],
+                'memu': qemu['mem']/qemu['maxmem']
+            }
+            for qemu in self.__pmox_api.nodes(self.node['node']).qemu.get()
+        ]
+
+        lxcs: list = [
+            {
+                'vmid': lxc['vmid'],
+                'name': lxc['name'],
+                'status': lxc['status'],
+                'cpu': lxc['cpu'],
+                'cpus': lxc['cpus'],
+                'uptime': lxc['uptime'],
+                'memu': lxc['mem']/lxc['maxmem']
+            }
+            for lxc in self.__pmox_api.nodes(self.node['node']).lxc.get()
+        ]
+
+        return {
+            'qemus': qemus,
+            'lxcs': lxcs
+        }

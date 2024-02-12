@@ -1,7 +1,6 @@
 # pveiembeds.py
-
-from json import dumps
 from discord import Embed
+from tabulate import tabulate
 from datetime import datetime, timedelta
 
 
@@ -85,10 +84,19 @@ def em_basic_all_status(pvei_data: dict):
         colour=0xc65059,
         timestamp=datetime.now()
     )
-
     embed.set_author(
         name='XBI1 - Notification Bot',
         url=author_url,
+        icon_url=bot_image_url
+    )
+    embed.set_thumbnail(
+        url=bot_image_url
+    )
+    embed.set_image(
+        url=bot_image_url
+    )
+    embed.set_footer(
+        text='Proxmox',
         icon_url=bot_image_url
     )
 
@@ -113,16 +121,97 @@ def em_basic_all_status(pvei_data: dict):
         inline=False
     )
 
+    return embed
+
+
+def em_basic_information(pvei_data: dict):
+    def basic_information_field(b_info: dict):
+        result: str = ''
+
+        for info in b_info:
+            result += '- **' + info + ': **'
+            if info in ['maxmem', 'maxdisk']:
+                result += str(togigabyte(b_info[info])) + '\n'
+            else:
+                result += str(b_info[info]) + '\n'
+
+        return result
+
+    embed = Embed(
+        title='sciencecode-pve-1',
+        url=pvei_url,
+        description='Basic Information about node.',
+        colour=0xc65059,
+        timestamp=datetime.now()
+    )
+    embed.set_author(
+        name='XBI1 - Notification Bot',
+        url=author_url,
+        icon_url=bot_image_url
+    )
     embed.set_thumbnail(
         url=bot_image_url
     )
-
     embed.set_image(
         url=bot_image_url
     )
     embed.set_footer(
         text='Proxmox',
         icon_url=bot_image_url
+    )
+
+    embed.add_field(
+        name='Basic Information',
+        value=basic_information_field(pvei_data),
+        inline=False
+    )
+
+    return embed
+
+
+def em_all_machines(pvei_data: dict):
+    def qemus_field(qemus_dict: dict):
+        result: str = ''
+
+        for qemu in qemus_dict:
+            result += '- ' + str(qemu['vmid']) + ' **:** '
+            result += str(qemu['name']) + ' **:** '
+            result += str(qemu['status']) + ' **:** '
+            result += '%' + str(round(qemu['cpu'], 2) * 100) + ' **:** '
+            result += str(qemu['cpus']) + ' **:** '
+            result += str(sec_to_datetime(qemu['uptime'])) + ' **:** '
+            result += '%' + str(round(qemu['memu'], 2) * 100)
+            result += '\n'
+
+        return result
+
+    embed = Embed(
+        title='sciencecode-pve-1',
+        url=pvei_url,
+        description='All information for Qemus and LXCs.',
+        colour=0xc65059,
+        timestamp=datetime.now()
+    )
+    embed.set_author(
+        name='XBI1 - Notification Bot',
+        url=author_url,
+        icon_url=bot_image_url
+    )
+    embed.set_thumbnail(
+        url=bot_image_url
+    )
+    embed.set_image(
+        url=bot_image_url
+    )
+    embed.set_footer(
+        text='Proxmox',
+        icon_url=bot_image_url
+    )
+
+    embed.add_field(
+        name='Qemus',
+        value=qemus_field(pvei_data['qemus']),
+        inline=False
     )
 
     return embed
