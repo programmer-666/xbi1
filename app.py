@@ -8,8 +8,8 @@ from threading import Thread
 from datetime import datetime
 from sourcecode_check import scc
 from __init__ import pvei, config
-from emb_messages import pveiembeds
 from discord.ext import commands, tasks
+from dc_messages import pveiembeds, pveimessages
 
 
 scc_thread = Thread(
@@ -84,6 +84,14 @@ async def basic_information_report(ctx: commands.context.Context, *args):
 async def all_lxcs(ctx: commands.context.Context, *args):
     await ctx.send(
         embed=pveiembeds.em_all_machines(
+            pvei.all_machines()
+        )
+    )
+
+@bot.command(name='mtables')
+async def all_mtables(ctx: commands.context.Context, *args):
+    await ctx.send(
+        pveimessages.all_machines_table(
             pvei.all_machines()
         )
     )

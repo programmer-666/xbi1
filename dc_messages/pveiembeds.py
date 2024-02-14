@@ -1,6 +1,5 @@
 # pveiembeds.py
 from discord import Embed
-from tabulate import tabulate
 from datetime import datetime, timedelta
 
 
@@ -118,7 +117,7 @@ def em_basic_all_status(pvei_data: dict):
     embed.add_field(
         name='Disks',
         value=disks_field(pvei_data[list(pvei_data)[2]]),
-        inline=False
+        inline=True
     )
 
     return embed
@@ -176,11 +175,26 @@ def em_all_machines(pvei_data: dict):
         for qemu in qemus_dict:
             result += '- ' + str(qemu['vmid']) + ' **:** '
             result += str(qemu['name']) + ' **:** '
-            result += str(qemu['status']) + ' **:** '
+            result += str(qemu['status'])[:1] + ' **:** '
             result += '%' + str(round(qemu['cpu'], 2) * 100) + ' **:** '
             result += str(qemu['cpus']) + ' **:** '
             result += str(sec_to_datetime(qemu['uptime'])) + ' **:** '
             result += '%' + str(round(qemu['memu'], 2) * 100)
+            result += '\n'
+
+        return result
+
+    def lxcs_field(lxcs_dict: dict):
+        result: str = ''
+
+        for lxc in lxcs_dict:
+            result += '- ' + str(lxc['vmid']) + ' **:** '
+            result += str(lxc['name']) + ' **:** '
+            result += str(lxc['status'])[:1] + ' **:** '
+            result += '%' + str(round(lxc['cpu'], 2) * 100) + ' **:** '
+            result += str(lxc['cpus']) + ' **:** '
+            result += str(sec_to_datetime(lxc['uptime'])) + ' **:** '
+            result += '%' + str(round(lxc['memu'], 2) * 100)
             result += '\n'
 
         return result
@@ -211,6 +225,12 @@ def em_all_machines(pvei_data: dict):
     embed.add_field(
         name='Qemus',
         value=qemus_field(pvei_data['qemus']),
+        inline=False
+    )
+
+    embed.add_field(
+        name='LXCs',
+        value=lxcs_field(pvei_data['lxcs']),
         inline=False
     )
 
