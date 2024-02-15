@@ -88,6 +88,7 @@ async def all_lxcs(ctx: commands.context.Context, *args):
         )
     )
 
+
 @bot.command(name='mtables')
 async def all_mtables(ctx: commands.context.Context, *args):
     await ctx.send(

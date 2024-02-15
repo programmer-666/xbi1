@@ -20,6 +20,10 @@ def sec_to_datetime(seconds):
     return str(timedelta(seconds=seconds))
 
 
+def code_mark(desc: str):
+    return '```' + desc + '```'
+
+
 def em_basic_all_status(pvei_data: dict):
     def node_field(node_dict: dict):
         result: str = ''

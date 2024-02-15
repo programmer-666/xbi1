@@ -102,10 +102,10 @@ class PVEInterface:
                     'vmid': qemu['vmid'],
                     'name': qemu['name'],
                     'status': qemu['status'],
-                    'cpu': qemu['cpu'],
+                    'cpu': round(qemu['cpu'], 2),
                     'cpus': qemu['cpus'],
                     'uptime': qemu['uptime'],
-                    'memu': qemu['mem']/qemu['maxmem']
+                    'memu': round(qemu['mem']/qemu['maxmem'], 2)
                 }
                 for qemu in self.__pmox_api.nodes(self.node['node']).qemu.get()
             ],
@@ -114,10 +114,10 @@ class PVEInterface:
                     'vmid': lxc['vmid'],
                     'name': lxc['name'],
                     'status': lxc['status'],
-                    'cpu': lxc['cpu'],
+                    'cpu': round(lxc['cpu'], 2),
                     'cpus': lxc['cpus'],
                     'uptime': lxc['uptime'],
-                    'memu': lxc['mem']/lxc['maxmem']
+                    'memu': round(lxc['mem']/lxc['maxmem'], 2)
                 }
                 for lxc in self.__pmox_api.nodes(self.node['node']).lxc.get()
             ]
