@@ -16,4 +16,4 @@ def all_machines_table(pvei_data: dict):
         body=[list(qemu.values()) for qemu in qemus]
     )
 
-    return code_mark(lxc_table) + code_mark(qemu_table)
+    return code_mark(':LXC MACHINES:\n' + lxc_table) + code_mark(':QEMU MACHINES:\n' + qemu_table)

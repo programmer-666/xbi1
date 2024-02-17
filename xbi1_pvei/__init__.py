@@ -47,27 +47,11 @@ class PVEInterface:
         # Returns status of node.
         node = self.node['node']
         disks = [
-            # {
-            #     'model': disk['model'],
-            #     'size': disk['size'],
-            #     'type': disk['type']
-            # }
             disk
             for disk in self.__pmox_api.nodes(node).disks.list.get()
         ]
 
         qemus = [
-            # {
-            #     'vmid': qemu['vmid'],
-            #     'name': qemu['name'],
-            #     'status': qemu['status'],
-            #     'uptime': qemu['uptime'],
-            #     'cpu': qemu['cpu'],
-            #     'mem': qemu['mem'],
-            #     'maxmem': qemu['maxmem'],
-            #     'cpus': qemu['cpus'],
-            #     'maxdisk': qemu['maxdisk'],
-            # }
             qemu
             for qemu in self.__pmox_api.nodes(node).qemu.get()
         ]
