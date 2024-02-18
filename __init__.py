@@ -2,8 +2,9 @@
 # :scc:1:1000:
 import configparser
 from proxmoxer import ProxmoxAPI
-from xbi1_pvei import PVEInterface
+
 from xbi1_pvei import pvei_logger
+from xbi1_pvei import PVEInterface
 
 
 config = configparser.ConfigParser()
