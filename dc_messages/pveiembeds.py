@@ -1,28 +1,17 @@
 # pveiembeds.py
+
 from discord import Embed
-from datetime import datetime, timedelta
+from datetime import datetime
+
+from .auxi_funcs import *
+from .embed_templates import InformationalEmbed
 
 
 pvei_url: str = 'https://172.16.1.150:8006'
 author_url: str = 'https://github.com/programmer-666/xbi1'
 bot_image_url: str = 'https://cdn.discordapp.com/app-icons/1176948443839737996/4750381453e4a1b72513529c8cbe4423.png?size=256'
 
-
-def togigabyte(memory: int) -> float:
-    return round(memory / 1024 / 1024 / 1024, 2)
-
-
-def avg_mem(mem: int, maxmem: int):
-    return round((mem / maxmem) * 100, 2)
-
-
-def sec_to_datetime(seconds):
-    return str(timedelta(seconds=seconds))
-
-
-def code_mark(desc: str):
-    return '```' + desc + '```'
-
+em_template = Embed()
 
 def em_basic_all_status(pvei_data: dict):
     def node_field(node_dict: dict):
@@ -141,7 +130,7 @@ def em_basic_information(pvei_data: dict):
         return result
 
     embed = Embed(
-        title='sciencecode-pve-1',
+        title='Proxmox Norification',
         url=pvei_url,
         description='Basic Information about node.',
         colour=0xc65059,
@@ -204,7 +193,7 @@ def em_all_machines(pvei_data: dict):
         return result
 
     embed = Embed(
-        title='sciencecode-pve-1',
+        title='Proxmox Norification',
         url=pvei_url,
         description='All information for Qemus and LXCs.',
         colour=0xc65059,
@@ -239,3 +228,8 @@ def em_all_machines(pvei_data: dict):
     )
 
     return embed
+
+def em_proxmox_version(pvei_data: dict):
+    return InformationalEmbed(
+        description='123'
+    )

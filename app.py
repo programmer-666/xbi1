@@ -1,6 +1,5 @@
 #!.venv/bin/python
 # app.py
-# :scc:1:1001:
 
 import json
 import discord
@@ -8,17 +7,10 @@ from threading import Thread
 from datetime import datetime
 from discord.ext import commands, tasks
 
-from sourcecode_check import scc
 from __init__ import pvei, config
 from dc_messages import pveiembeds, pveimessages
 
 
-scc_thread: Thread = Thread(
-    target=scc.activate_scc,
-    name='SCC Thread'
-)
-scc_thread.start()
-# SCC works differen thread take time
 
 with open('dc_ids.json') as dcj_file:
     dc_ids: dict = json.load(dcj_file)
@@ -109,5 +101,13 @@ async def all_mtables(ctx: commands.context.Context, *args):
     )
 # sends information about lxc and qemu machines
 # but not embed, ascii table with code marks ```
+
+@bot.command(name='version')
+async def all_lxcs(ctx: commands.context.Context, *args):
+    await ctx.send(
+        embed=pveiembeds.em_proxmox_version(
+            pvei.proxmox_version()
+        )
+    )
 
 bot.run(config['DISCORD']['bot_token'])
