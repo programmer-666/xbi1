@@ -1,15 +1,50 @@
 # embed_templates.py
 
 from discord import Embed
-
-proxmox_url: str = 'https://0.0.0.0:8006'
+from typing import Optional, Any, Self
 
 class InformationalEmbed(Embed):
-    def __init__(self, description: str = 'Info', **kwargs):
-        super().__init__()
+    __def_description: str = 'Info'
+    __def_colour: hex = 0xc65059
+    __def_url: str = 'https://0.0.0.0:8006'
+    __def_title: str = 'Informational Notification'
 
-        self.title = 'Informational Notification'
-        self.url = proxmox_url
+    __def_author_name: str = 'XBI1 - Notification Bot'
+    __def_author_url: str = 'https://github.com/programmer-666/xbi1'
+    __def_author_icon_url: str = 'https://cdn.discordapp.com/app-icons/'\
+        + '1176948443839737996/4750381453e4a1b72513529c8cbe4423.png?size=256'
+    # default values
+
+    def __init__(
+        self,
+        title: Optional[Any] = __def_title,
+        url: Optional[Any] = __def_url,
+        colour: Optional[Any] = __def_colour,
+        description: Optional[Any] =__def_description,
+        **kwargs
+    ):
+        super().__init__(**kwargs)
+        
+        self.title = title
+        self.url = url
+        self.colour = colour
         self.description = description
-        self.colour = 0xc65059
-        # self.timestamp
+
+    def set_author(
+        self,
+        name: Any = __def_author_name,
+        url: Optional[Any] = __def_author_url,
+        icon_url: Optional[Any] = __def_author_icon_url
+        ) -> Self:
+
+        self._author = {
+            'name': str(name),
+        }
+
+        if url is not None:
+            self._author['url'] = str(url)
+
+        if icon_url is not None:
+            self._author['icon_url'] = str(icon_url)
+
+        return self

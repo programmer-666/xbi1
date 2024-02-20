@@ -230,6 +230,7 @@ def em_all_machines(pvei_data: dict):
     return embed
 
 def em_proxmox_version(pvei_data: dict):
-    return InformationalEmbed(
-        description='123'
-    )
+    ie = InformationalEmbed()
+    ie.set_author()
+    ie.add_field(name='Hetfield', value='test')
+    return ie
