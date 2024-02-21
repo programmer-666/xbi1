@@ -3,8 +3,8 @@
 from discord import Embed
 from datetime import datetime
 
-from .auxi_funcs import *
 from .embed_templates import InformationalEmbed
+from .auxi_funcs import togigabyte, sec_to_datetime, avg_mem, code_mark
 
 
 pvei_url: str = 'https://172.16.1.150:8006'
@@ -12,6 +12,7 @@ author_url: str = 'https://github.com/programmer-666/xbi1'
 bot_image_url: str = 'https://cdn.discordapp.com/app-icons/1176948443839737996/4750381453e4a1b72513529c8cbe4423.png?size=256'
 
 em_template = Embed()
+
 
 def em_basic_all_status(pvei_data: dict):
     def node_field(node_dict: dict):
@@ -229,8 +230,12 @@ def em_all_machines(pvei_data: dict):
 
     return embed
 
+
 def em_proxmox_version(pvei_data: dict):
     ie = InformationalEmbed()
     ie.set_author()
     ie.add_field(name='Hetfield', value='test')
+    ie.set_thumbnail()
+    ie.set_image()
+
     return ie
