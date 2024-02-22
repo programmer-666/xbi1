@@ -3,7 +3,6 @@
 
 import json
 import discord
-from threading import Thread
 from datetime import datetime
 from discord.ext import commands, tasks
 
@@ -11,11 +10,10 @@ from __init__ import pvei, config
 from dc_messages import pveiembeds, pveimessages
 
 
-
 with open('dc_ids.json') as dcj_file:
     dc_ids: dict = json.load(dcj_file)
 # dc_ids.json file holds guld and channel id's
-# bot interact channels with theese data
+# bot interact channels with theese data
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -26,8 +24,9 @@ bot = commands.Bot(command_prefix='.', intents=intents)
 dtime = datetime.now()
 # dtime declared for timed jobs
 
+
 @tasks.loop(seconds=1)
-async def basic_all_status_loop():
+async def basic_all_status_loop() -> None:
     global dtime
 
     if datetime.now().hour > dtime.hour:
@@ -59,13 +58,14 @@ async def basic_all_status_loop():
                 )
             )
 # basic_all_status_loop function works every 1 second
-# and checks hourly, minutely jobs
-# this is look not good but now it works, will be update...
+# and checks hourly, minutely jobs
+# this is look not good but now it works, will be update...
+
 
 @bot.event
 async def on_ready():
+    # basic_all_status_loop.start()
     pass
-    # basic_all_status_loop.start()
 
 
 @bot.command(name='b_status')
@@ -74,7 +74,8 @@ async def basic_all_status_report(ctx: commands.context.Context, *args):
         embed=pveiembeds.em_basic_all_status(pvei.basic_all_status())
     )
 # b_status command sends basicly embed report
-# takes embed message from dc_messages, pveiembeds
+# takes embed message from dc_messages, pveiembeds
+
 
 @bot.command(name='b_information')
 async def basic_information_report(ctx: commands.context.Context, *args):
@@ -83,6 +84,7 @@ async def basic_information_report(ctx: commands.context.Context, *args):
     )
 # b_information sends information about node
 
+
 @bot.command(name='machines')
 async def all_lxcs(ctx: commands.context.Context, *args):
     await ctx.send(
@@ -90,7 +92,8 @@ async def all_lxcs(ctx: commands.context.Context, *args):
             pvei.all_machines()
         )
     )
-# this command gets various data from lxc and qemu machines
+# this command gets various data from lxc and qemu machines
+
 
 @bot.command(name='mtables')
 async def all_mtables(ctx: commands.context.Context, *args):
@@ -102,8 +105,9 @@ async def all_mtables(ctx: commands.context.Context, *args):
 # sends information about lxc and qemu machines
 # but not embed, ascii table with code marks ```
 
+
 @bot.command(name='version')
-async def all_lxcs(ctx: commands.context.Context, *args):
+async def version(ctx: commands.context.Context, *args):
     await ctx.send(
         embed=pveiembeds.em_proxmox_version(
             pvei.proxmox_version()

@@ -1,6 +1,7 @@
 # pvei.py
 
 from urllib3 import disable_warnings
+from proxmoxer import ProxmoxAPI
 
 from .pvei_logger import log
 
@@ -17,7 +18,7 @@ class PVEInterface:
     # Works on Proxmoxer module.
     # Developed for getting information about node.
     @log
-    def __init__(self, proxmox_api: 'ProxmoxAPI'):
+    def __init__(self, proxmox_api: ProxmoxAPI):
         # still a beta code on test stage
         # self.node gets first node from ProxmoxVE
         self.__pmox_api = proxmox_api
@@ -49,7 +50,7 @@ class PVEInterface:
     def basic_all_status(self) -> dict:
         # Returns all basic data of node.
         node = self.node['node']
-        
+
         disks = [
             disk
             for disk in self.__pmox_api.nodes(node).disks.list.get()

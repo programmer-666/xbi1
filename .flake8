@@ -1,0 +1,11 @@
+[flake8]
+exclude =
+    .git,
+    __pycache__,
+    .venv,
+    logs
+count = True
+statistics = True
+show-source = True
+per-file-ignores =
+    xbi1_pvei/pvei.py:F821

@@ -27,6 +27,12 @@ try:
         )
     )
 
+    # important note: ⚠️
+    # The Proxmox API module was called once in the
+    # code file containing the PVE Interface class.
+    # And it's called again in this code as well.
+    # A study will be done on this.
+
     if pvei:
         # if connection established without problem
         pvei_api_state = True

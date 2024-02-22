@@ -6,7 +6,7 @@ from typing import Optional, Any, Self
 
 class InformationalEmbed(Embed):
     __def_description: str = 'Info'
-    __def_colour: hex = 0xc65059
+    __def_colour: int = 0xc65059
     __def_url: str = 'https://0.0.0.0:8006'
     __def_title: str = 'Informational Notification'
 
@@ -18,6 +18,9 @@ class InformationalEmbed(Embed):
     __def_thumbnail: str = __def_author_icon_url
 
     __def_image: str = __def_author_icon_url
+
+    __def_footer_text: str = "Footer"
+    __def_footer_icon_url: str = __def_author_icon_url
     # default values
 
     def __init__(
@@ -36,6 +39,7 @@ class InformationalEmbed(Embed):
 
     def set_author(
         self,
+        *,
         name: Any = __def_author_name,
         url: Optional[Any] = __def_author_url,
         icon_url: Optional[Any] = __def_author_icon_url
@@ -55,6 +59,7 @@ class InformationalEmbed(Embed):
 
     def set_thumbnail(
         self,
+        *,
         url: Optional[Any] = __def_thumbnail
     ) -> Self:
         if url is None:
@@ -70,6 +75,7 @@ class InformationalEmbed(Embed):
 
     def set_image(
         self,
+        *,
         url: Optional[Any] = __def_image
     ) -> Self:
 
@@ -87,8 +93,9 @@ class InformationalEmbed(Embed):
 
     def set_footer(
         self,
-        text: Optional[Any] = None,
-        icon_url: Optional[Any] = None
+        *,
+        text: Optional[Any] = __def_footer_text,
+        icon_url: Optional[Any] = __def_footer_icon_url
     ) -> Self:
 
         self._footer = {}

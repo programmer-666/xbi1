@@ -4,12 +4,13 @@ from discord import Embed
 from datetime import datetime
 
 from .embed_templates import InformationalEmbed
-from .auxi_funcs import togigabyte, sec_to_datetime, avg_mem, code_mark
+from .auxi_funcs import togigabyte, sec_to_datetime, avg_mem
 
 
 pvei_url: str = 'https://172.16.1.150:8006'
 author_url: str = 'https://github.com/programmer-666/xbi1'
-bot_image_url: str = 'https://cdn.discordapp.com/app-icons/1176948443839737996/4750381453e4a1b72513529c8cbe4423.png?size=256'
+bot_image_url: str = 'https://cdn.discordapp.com/app-icons/1176948443839' + \
+    '737996/4750381453e4a1b72513529c8cbe4423.png?size=256'
 
 em_template = Embed()
 
@@ -37,15 +38,18 @@ def em_basic_all_status(pvei_data: dict):
             result += '- **[ ' + str(vm['vmid']) + ':' + vm['name'] + ' ]**\n'
 
             result += ' - **Status:** ' + str(vm['status']) + '\n'
-            result += ' - **Uptime:** ' + str(sec_to_datetime(vm['uptime'])) + '\n'
+            result += ' - **Uptime:** ' + \
+                str(sec_to_datetime(vm['uptime'])) + '\n'
             result += ' - **CPU:** ' + str(round(vm['cpu'], 2)) + '%\n'
 
-            result += ' - **Memory:** ' + str(avg_mem(vm['mem'], vm['maxmem'])) + '%'
+            result += ' - **Memory:** ' + \
+                str(avg_mem(vm['mem'], vm['maxmem'])) + '%'
             result += ' (' + str(togigabyte(vm['mem']))
             result += '/' + str(togigabyte(vm['maxmem'])) + ')\n'
 
             result += ' - **CPUs:** ' + str(vm['cpus']) + '\n'
-            result += ' - **MaxDisk:** ' + str(togigabyte(vm['maxdisk'])) + '\n'
+            result += ' - **MaxDisk:** ' + \
+                str(togigabyte(vm['maxdisk'])) + '\n'
 
             result += ' - **DiskWrite:** ' + str(vm['diskwrite']) + '\n'
             result += ' - **DiskRead:** ' + str(vm['diskread']) + '\n'
@@ -237,5 +241,6 @@ def em_proxmox_version(pvei_data: dict):
     ie.add_field(name='Hetfield', value='test')
     ie.set_thumbnail()
     ie.set_image()
+    ie.set_footer()
 
     return ie
