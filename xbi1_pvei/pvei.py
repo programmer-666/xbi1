@@ -95,7 +95,7 @@ class PVEInterface:
                     'cpu': round(qemu['cpu'], 2),
                     'cpus': qemu['cpus'],
                     'uptime': qemu['uptime'],
-                    'memu': round(qemu['mem']/qemu['maxmem'], 2)
+                    'memu': round(qemu['mem'] / qemu['maxmem'], 2)
                 }
                 for qemu in self.__pmox_api.nodes(self.node['node']).qemu.get()
             ],
@@ -107,7 +107,7 @@ class PVEInterface:
                     'cpu': round(lxc['cpu'], 2),
                     'cpus': lxc['cpus'],
                     'uptime': lxc['uptime'],
-                    'memu': round(lxc['mem']/lxc['maxmem'], 2)
+                    'memu': round(lxc['mem'] / lxc['maxmem'], 2)
                 }
                 for lxc in self.__pmox_api.nodes(self.node['node']).lxc.get()
             ]
