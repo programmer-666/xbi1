@@ -3,7 +3,7 @@
 from discord import Embed
 from datetime import datetime
 
-from .embed_templates import InformationalEmbed
+from .embed_templates import InformationalEmbed, WarningEmbed, SuccessEmbed
 from .auxi_funcs import togigabyte, sec_to_datetime, avg_mem
 
 
@@ -74,51 +74,46 @@ def em_basic_all_status(pvei_data: dict):
 
         return result
 
-    embed = Embed(
+    basic_status_embed = InformationalEmbed(
         title=list(pvei_data)[0],
         url=pvei_url,
         description='Basic All Status',
         colour=0xc65059,
         timestamp=datetime.now()
     )
-    embed.set_author(
+    basic_status_embed.set_author(
         name='XBI1 - Notification Bot',
         url=author_url,
         icon_url=bot_image_url
     )
-    embed.set_thumbnail(
-        url=bot_image_url
-    )
-    embed.set_image(
-        url=bot_image_url
-    )
-    embed.set_footer(
+    basic_status_embed.set_thumbnail()
+    basic_status_embed.set_footer(
         text='Proxmox',
         icon_url=bot_image_url
     )
 
-    embed.add_field(
+    basic_status_embed.add_field(
         name='Node',
         value=node_field(pvei_data[list(pvei_data)[0]]),
         inline=False
     )
-    embed.add_field(
+    basic_status_embed.add_field(
         name='Virtual Machines',
         value=vm_lxc_field(pvei_data[list(pvei_data)[1]]),
         inline=False
     )
-    embed.add_field(
+    basic_status_embed.add_field(
         name='LXCs',
         value=vm_lxc_field(pvei_data[list(pvei_data)[3]]),
         inline=False
     )
-    embed.add_field(
+    basic_status_embed.add_field(
         name='Disks',
         value=disks_field(pvei_data[list(pvei_data)[2]]),
         inline=True
     )
 
-    return embed
+    return basic_status_embed
 
 
 def em_basic_information(pvei_data: dict):
@@ -134,36 +129,31 @@ def em_basic_information(pvei_data: dict):
 
         return result
 
-    embed = Embed(
+    basic_information_embed = InformationalEmbed(
         title='Proxmox Norification',
         url=pvei_url,
         description='Basic Information about node.',
         colour=0xc65059,
         timestamp=datetime.now()
     )
-    embed.set_author(
+    basic_information_embed.set_author(
         name='XBI1 - Notification Bot',
         url=author_url,
         icon_url=bot_image_url
     )
-    embed.set_thumbnail(
-        url=bot_image_url
-    )
-    embed.set_image(
-        url=bot_image_url
-    )
-    embed.set_footer(
+    basic_information_embed.set_thumbnail()
+    basic_information_embed.set_footer(
         text='Proxmox',
         icon_url=bot_image_url
     )
 
-    embed.add_field(
+    basic_information_embed.add_field(
         name='Basic Information',
         value=basic_information_field(pvei_data),
         inline=False
     )
 
-    return embed
+    return basic_information_embed
 
 
 def em_all_machines(pvei_data: dict):
@@ -236,11 +226,18 @@ def em_all_machines(pvei_data: dict):
 
 
 def em_proxmox_version(pvei_data: dict):
-    ie = InformationalEmbed()
-    ie.set_author()
-    ie.add_field(name='Hetfield', value='test')
-    ie.set_thumbnail()
-    ie.set_image()
-    ie.set_footer()
+    def desc_version(pvei_data: dict):
+        return '**' + pvei_data['version'] + '**'
 
-    return ie
+    version_embed = InformationalEmbed(
+        title='Proxmox Version',
+        description=desc_version(pvei_data)
+    )
+
+    version_embed.set_author()
+    version_embed.set_thumbnail()
+    version_embed.set_footer(
+        text="Proxmox"
+    )
+
+    return version_embed
