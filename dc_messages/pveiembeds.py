@@ -187,42 +187,33 @@ def em_all_machines(pvei_data: dict):
 
         return result
 
-    embed = Embed(
+    all_machines_embed = InformationalEmbed(
         title='Proxmox Norification',
         url=pvei_url,
-        description='All information for Qemus and LXCs.',
-        colour=0xc65059,
-        timestamp=datetime.now()
+        description='All information for Qemus and LXCs.'
     )
-    embed.set_author(
+    all_machines_embed.set_author(
         name='XBI1 - Notification Bot',
-        url=author_url,
-        icon_url=bot_image_url
+        url=author_url
     )
-    embed.set_thumbnail(
-        url=bot_image_url
-    )
-    embed.set_image(
-        url=bot_image_url
-    )
-    embed.set_footer(
-        text='Proxmox',
-        icon_url=bot_image_url
+    all_machines_embed.set_thumbnail()
+    all_machines_embed.set_footer(
+        text='Proxmox'
     )
 
-    embed.add_field(
+    all_machines_embed.add_field(
         name='Qemus',
         value=qemus_field(pvei_data['qemus']),
         inline=False
     )
 
-    embed.add_field(
+    all_machines_embed.add_field(
         name='LXCs',
         value=lxcs_field(pvei_data['lxcs']),
         inline=False
     )
 
-    return embed
+    return all_machines_embed
 
 
 def em_proxmox_version(pvei_data: dict):

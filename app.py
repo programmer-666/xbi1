@@ -25,7 +25,6 @@ dtime = datetime.now()
 # dtime declared for timed jobs
 
 
-pvei.change_node(1)
 
 @tasks.loop(seconds=1)
 async def basic_all_status_loop() -> None:
