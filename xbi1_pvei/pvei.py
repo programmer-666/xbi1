@@ -28,6 +28,7 @@ class PVEInterface:
     def change_node(self, node_id: int = 0) -> None:
         # changes current node
         self.node = self.__pmox_api.nodes.get()[node_id]
+        return self.node
 
     @log
     def proxmox_version(self) -> dict:

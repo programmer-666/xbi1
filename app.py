@@ -25,7 +25,6 @@ dtime = datetime.now()
 # dtime declared for timed jobs
 
 
-
 @tasks.loop(seconds=1)
 async def basic_all_status_loop() -> None:
     global dtime
@@ -114,5 +113,12 @@ async def version(ctx: commands.context.Context, *args):
             pvei.proxmox_version()
         )
     )
+# returns node's proxmox version
+
+
+@bot.command(name='ch_node')
+async def ch_node(ctx: commands.context.Context, arg):
+    await ctx.send(str(pvei.change_node(int(arg))))
+
 
 bot.run(config['DISCORD']['bot_token'])

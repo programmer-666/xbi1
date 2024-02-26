@@ -1,16 +1,13 @@
 # pveiembeds.py
 
 from discord import Embed
-from datetime import datetime
 
-from .embed_templates import InformationalEmbed, WarningEmbed, SuccessEmbed
+from .embed_templates import InformationalEmbed
 from .auxi_funcs import togigabyte, sec_to_datetime, avg_mem
 
 
 pvei_url: str = 'https://172.16.1.150:8006'
 author_url: str = 'https://github.com/programmer-666/xbi1'
-bot_image_url: str = 'https://cdn.discordapp.com/app-icons/1176948443839' + \
-    '737996/4750381453e4a1b72513529c8cbe4423.png?size=256'
 
 em_template = Embed()
 
@@ -77,19 +74,15 @@ def em_basic_all_status(pvei_data: dict):
     basic_status_embed = InformationalEmbed(
         title=list(pvei_data)[0],
         url=pvei_url,
-        description='Basic All Status',
-        colour=0xc65059,
-        timestamp=datetime.now()
+        description='Basic All Status'
     )
     basic_status_embed.set_author(
         name='XBI1 - Notification Bot',
-        url=author_url,
-        icon_url=bot_image_url
+        url=author_url
     )
     basic_status_embed.set_thumbnail()
     basic_status_embed.set_footer(
-        text='Proxmox',
-        icon_url=bot_image_url
+        text='Proxmox'
     )
 
     basic_status_embed.add_field(
@@ -132,19 +125,15 @@ def em_basic_information(pvei_data: dict):
     basic_information_embed = InformationalEmbed(
         title='Proxmox Norification',
         url=pvei_url,
-        description='Basic Information about node.',
-        colour=0xc65059,
-        timestamp=datetime.now()
+        description='Basic Information about node.'
     )
     basic_information_embed.set_author(
         name='XBI1 - Notification Bot',
-        url=author_url,
-        icon_url=bot_image_url
+        url=author_url
     )
     basic_information_embed.set_thumbnail()
     basic_information_embed.set_footer(
-        text='Proxmox',
-        icon_url=bot_image_url
+        text='Proxmox'
     )
 
     basic_information_embed.add_field(
