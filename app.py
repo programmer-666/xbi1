@@ -53,8 +53,8 @@ async def basic_all_status_loop() -> None:
         for guild in list(dc_ids):
             notf_channel = bot.get_channel(dc_ids[guild]['id_notfc'])
             await notf_channel.send(
-                embed=pveiembeds.em_basic_all_status(
-                    pvei.basic_all_status()
+                pveimessages.all_machines_table(
+                    pvei.all_machines()
                 )
             )
 # basic_all_status_loop function works every 1 second
@@ -69,24 +69,28 @@ async def on_ready():
 
 
 @bot.command(name='b_status')
-async def basic_all_status_report(ctx: commands.context.Context, *args):
+async def basic_all_status_report(ctx: commands.context.Context, arg):
     await ctx.send(
-        embed=pveiembeds.em_basic_all_status(pvei.basic_all_status())
+        embed=pveiembeds.em_basic_all_status(
+            pvei.basic_all_status()
+        )
     )
 # b_status command sends basicly embed report
 # takes embed message from dc_messages, pveiembeds
 
 
 @bot.command(name='b_information')
-async def basic_information_report(ctx: commands.context.Context, *args):
+async def basic_information_report(ctx: commands.context.Context, arg):
     await ctx.send(
-        embed=pveiembeds.em_basic_information(pvei.basic_information())
+        embed=pveiembeds.em_basic_information(
+            pvei.basic_information()
+        )
     )
 # b_information sends information about node
 
 
 @bot.command(name='machines')
-async def all_lxcs(ctx: commands.context.Context, *args):
+async def all_lxcs(ctx: commands.context.Context, arg):
     await ctx.send(
         embed=pveiembeds.em_all_machines(
             pvei.all_machines()
@@ -96,7 +100,7 @@ async def all_lxcs(ctx: commands.context.Context, *args):
 
 
 @bot.command(name='mtables')
-async def all_mtables(ctx: commands.context.Context, *args):
+async def all_mtables(ctx: commands.context.Context, arg):
     await ctx.send(
         pveimessages.all_machines_table(
             pvei.all_machines()
@@ -107,7 +111,7 @@ async def all_mtables(ctx: commands.context.Context, *args):
 
 
 @bot.command(name='version')
-async def version(ctx: commands.context.Context, *args):
+async def version(ctx: commands.context.Context, arg):
     await ctx.send(
         embed=pveiembeds.em_proxmox_version(
             pvei.proxmox_version()
@@ -118,7 +122,13 @@ async def version(ctx: commands.context.Context, *args):
 
 @bot.command(name='ch_node')
 async def ch_node(ctx: commands.context.Context, arg):
-    await ctx.send(str(pvei.change_node(int(arg))))
-
+    await ctx.send(
+        str(
+            pvei.change_node(
+                int(arg)
+            )
+        )
+    )
+# changes active node
 
 bot.run(config['DISCORD']['bot_token'])
