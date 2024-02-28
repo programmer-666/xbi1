@@ -69,7 +69,7 @@ async def on_ready():
 
 
 @bot.command(name='b_status')
-async def basic_all_status_report(ctx: commands.context.Context, arg):
+async def basic_all_status_report(ctx: commands.context.Context, *args):
     await ctx.send(
         embed=pveiembeds.em_basic_all_status(
             pvei.basic_all_status()
@@ -80,7 +80,7 @@ async def basic_all_status_report(ctx: commands.context.Context, arg):
 
 
 @bot.command(name='b_information')
-async def basic_information_report(ctx: commands.context.Context, arg):
+async def basic_information_report(ctx: commands.context.Context, *args):
     await ctx.send(
         embed=pveiembeds.em_basic_information(
             pvei.basic_information()
@@ -90,7 +90,7 @@ async def basic_information_report(ctx: commands.context.Context, arg):
 
 
 @bot.command(name='machines')
-async def all_lxcs(ctx: commands.context.Context, arg):
+async def all_lxcs(ctx: commands.context.Context, *args):
     await ctx.send(
         embed=pveiembeds.em_all_machines(
             pvei.all_machines()
@@ -100,7 +100,7 @@ async def all_lxcs(ctx: commands.context.Context, arg):
 
 
 @bot.command(name='mtables')
-async def all_mtables(ctx: commands.context.Context, arg):
+async def all_mtables(ctx: commands.context.Context, *args):
     await ctx.send(
         pveimessages.all_machines_table(
             pvei.all_machines()
@@ -111,7 +111,7 @@ async def all_mtables(ctx: commands.context.Context, arg):
 
 
 @bot.command(name='version')
-async def version(ctx: commands.context.Context, arg):
+async def version(ctx: commands.context.Context, *args):
     await ctx.send(
         embed=pveiembeds.em_proxmox_version(
             pvei.proxmox_version()
@@ -121,11 +121,11 @@ async def version(ctx: commands.context.Context, arg):
 
 
 @bot.command(name='ch_node')
-async def ch_node(ctx: commands.context.Context, arg):
+async def ch_node(ctx: commands.context.Context, *args):
     await ctx.send(
         str(
             pvei.change_node(
-                int(arg)
+                int(args[0])
             )
         )
     )
