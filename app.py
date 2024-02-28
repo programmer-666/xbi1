@@ -12,8 +12,17 @@ from dc_messages import pveiembeds, pveimessages
 
 with open('dc_ids.json') as dcj_file:
     dc_ids: dict = json.load(dcj_file)
-# dc_ids.json file holds guld and channel id's
+# dc_ids.json file holds guild and channel id's
 # bot interact channels with theese data
+
+with open('sce_tasks.json') as scet:
+    sce_tasks: dict = json.load(scet)
+# loads time and command data for scheduled tasks
+
+commands_em_table: dict = {
+    "version": pveiembeds.em_proxmox_version(pvei.proxmox_version()),
+    "b_status": pveiembeds.em_basic_all_status(pvei.basic_all_status())
+}
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -26,8 +35,10 @@ dtime = datetime.now()
 
 
 @tasks.loop(seconds=1)
-async def basic_all_status_loop() -> None:
+async def timed_tasks() -> None:
     global dtime
+
+    # sce_tasks.json reading ...(scheduled tasks-commands)
 
     if datetime.now().hour > dtime.hour:
         # checks last datetime every second
@@ -35,6 +46,9 @@ async def basic_all_status_loop() -> None:
         dtime = datetime.now()
 
         await bot.wait_until_ready()
+
+
+        """
         for guild in list(dc_ids):
             notf_channel = bot.get_channel(dc_ids[guild]['id_notfc'])
 
@@ -43,29 +57,34 @@ async def basic_all_status_loop() -> None:
                     pvei.basic_all_status()
                 )
             )
+        """
         # takes every channel id and sends messages
 
     if datetime.now().minute > dtime.minute:
         # same function but works minutely
         dtime = datetime.now()
+
         await bot.wait_until_ready()
 
-        for guild in list(dc_ids):
-            notf_channel = bot.get_channel(dc_ids[guild]['id_notfc'])
-            await notf_channel.send(
-                pveimessages.all_machines_table(
-                    pvei.all_machines()
-                )
-            )
-# basic_all_status_loop function works every 1 second
+        for command in commands_em_table:
+            for sce_command in sce_tasks['minutely']['commands']:
+                if command == sce_command:
+                    for channel in sce_tasks['minutely']['channels']:
+                        notf_channel = bot.get_channel(channel)
+
+                        await notf_channel.send(
+                            embed=commands_em_table[command]
+                        )
+
+
+# timed_tasks function works every 1 second
 # and checks hourly, minutely jobs
 # this is look not good but now it works, will be update...
 
 
 @bot.event
 async def on_ready():
-    # basic_all_status_loop.start()
-    pass
+    timed_tasks.start()
 
 
 @bot.command(name='b_status')

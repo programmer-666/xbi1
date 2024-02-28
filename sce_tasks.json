@@ -1,0 +1,23 @@
+{
+  "minutely": {
+    "commands": [
+      "version",
+      "b_status"
+    ],
+    "channels": [
+      1204366562266714164
+    ]
+  },
+  "hourly": {
+    "commands": [],
+    "channels": []
+  },
+  "monthly": {
+    "commands": [],
+    "channels": []
+  },
+  "yearly": {
+    "commands": [],
+    "channels": []
+  }
+}
