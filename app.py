@@ -17,7 +17,7 @@ with open('dc_ids.json') as dcj_file:
 
 with open('timed_tasks.json') as timet:
     t_tasks: dict = json.load(timet)
-# loads time and command data for scheduled tasks
+# loads time and command data for scheduled tasks
 
 em_messages_table: dict = {
     "version": pveiembeds.em_proxmox_version(pvei.proxmox_version()),
@@ -50,20 +50,59 @@ async def timed_tasks() -> None:
     # dtime holds last time
     # t_tasks function checks every second dtimes if its up to date
 
+    if datetime.now().mont > dtime.month:
+        # checks last datetime every second
+        # if datetime is updated it updates dtime variable
+        dtime = datetime.now()
+
+        for command in em_messages_table:
+            for sce_command in t_tasks['monthly']['commands']:
+                if command == sce_command:
+                    for channel in t_tasks['monthly']['channels']:
+                        notf_channel = bot.get_channel(channel)
+                        await bot.wait_until_ready()
+                        await notf_channel.send(
+                            embed=em_messages_table[command]
+                        )
+        # for embed messages
+
+        for command in messages_table:
+            for sce_command in t_tasks['monthly']['commands']:
+                if command == sce_command:
+                    for channel in t_tasks['monthly']['channels']:
+                        notf_channel = bot.get_channel(channel)
+                        await bot.wait_until_ready()
+                        await notf_channel.send(
+                            messages_table[command]
+                        )
+        # for not embed messages
+
     if datetime.now().hour > dtime.hour:
         # checks last datetime every second
         # if datetime is updated it updates dtime variable
         dtime = datetime.now()
 
         for command in em_messages_table:
-            for sce_command in t_tasks['hourly']['commands']:
+            for sce_command in t_tasks['minutely']['commands']:
                 if command == sce_command:
-                    for channel in t_tasks['hourly']['channels']:
+                    for channel in t_tasks['minutely']['channels']:
                         notf_channel = bot.get_channel(channel)
                         await bot.wait_until_ready()
                         await notf_channel.send(
                             embed=em_messages_table[command]
                         )
+        # for embed messages
+
+        for command in messages_table:
+            for sce_command in t_tasks['minutely']['commands']:
+                if command == sce_command:
+                    for channel in t_tasks['minutely']['channels']:
+                        notf_channel = bot.get_channel(channel)
+                        await bot.wait_until_ready()
+                        await notf_channel.send(
+                            messages_table[command]
+                        )
+        # for not embed messages
 
     if datetime.now().minute > dtime.minute:
         # same function but works minutely
