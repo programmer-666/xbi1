@@ -1,8 +1,8 @@
 {
   "minutely": {
     "commands": [
-      "version",
-      "b_status"
+      "b_information",
+      "mtables"
     ],
     "channels": [
       1204366562266714164
