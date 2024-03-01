@@ -1,5 +1,6 @@
 # pveiembeds.py
 
+from datetime import datetime
 from discord import Embed
 
 from .embed_templates import InformationalEmbed
@@ -74,7 +75,8 @@ def em_basic_all_status(pvei_data: dict):
     basic_status_embed = InformationalEmbed(
         title=list(pvei_data)[0],
         url=pvei_url,
-        description='Basic All Status'
+        description='Basic All Status',
+        timestamp=datetime.now()
     )
     basic_status_embed.set_author(
         name='XBI1 - Notification Bot',
@@ -125,7 +127,8 @@ def em_basic_information(pvei_data: dict):
     basic_information_embed = InformationalEmbed(
         title='Proxmox Norification',
         url=pvei_url,
-        description='Basic Information about node.'
+        description='Basic Information about node.',
+        timestamp=datetime.now()
     )
     basic_information_embed.set_author(
         name='XBI1 - Notification Bot',
@@ -179,7 +182,8 @@ def em_all_machines(pvei_data: dict):
     all_machines_embed = InformationalEmbed(
         title='Proxmox Norification',
         url=pvei_url,
-        description='All information for Qemus and LXCs.'
+        description='All information for Qemus and LXCs.',
+        timestamp=datetime.now()
     )
     all_machines_embed.set_author(
         name='XBI1 - Notification Bot',
@@ -211,7 +215,8 @@ def em_proxmox_version(pvei_data: dict):
 
     version_embed = InformationalEmbed(
         title='Proxmox Version',
-        description=desc_version(pvei_data)
+        description=desc_version(pvei_data),
+        timestamp=datetime.now()
     )
 
     version_embed.set_author()

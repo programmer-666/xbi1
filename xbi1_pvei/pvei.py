@@ -20,7 +20,7 @@ class PVEInterface:
     @log
     def __init__(self, proxmox_api: ProxmoxAPI):
         # still a beta code on test stage
-        # self.node gets first node from ProxmoxVE
+        # self.node gets random node from ProxmoxVE
         self.__pmox_api = proxmox_api
         self.node = self.__pmox_api.nodes.get()[0]
 
@@ -113,3 +113,7 @@ class PVEInterface:
                 for lxc in self.__pmox_api.nodes(self.node['node']).lxc.get()
             ]
         }
+
+    @log
+    def all_nodes(self):
+        nodes = self.__pmox_api.nodes.get()

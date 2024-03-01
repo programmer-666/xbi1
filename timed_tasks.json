@@ -1,16 +1,19 @@
 {
   "minutely": {
     "commands": [
-      "b_information",
-      "mtables"
+      "machines"
     ],
     "channels": [
       1204366562266714164
     ]
   },
   "hourly": {
-    "commands": [],
-    "channels": []
+    "commands": [
+      "b_information"
+    ],
+    "channels": [
+      1204366562266714164
+    ]
   },
   "monthly": {
     "commands": [],
