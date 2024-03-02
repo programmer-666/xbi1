@@ -172,7 +172,19 @@ async def timed_tasks() -> None:
 
 @bot.event
 async def on_ready():
-    timed_tasks.start()
+    # timed_tasks.start()
+    pass
+
+
+@bot.command(name='nodes')
+async def nodes(ctx: commands.context.Context, *args):
+    await ctx.send(
+        embed=pveiembeds.em_nodes(
+            pvei.nodes()
+        )
+    )
+# b_status command sends basicly embed report
+# takes embed message from dc_messages, pveiembeds
 
 
 @bot.command(name='b_status')
@@ -232,7 +244,7 @@ async def ch_node(ctx: commands.context.Context, *args):
     await ctx.send(
         str(
             pvei.change_node(
-                int(args[0])
+                str(args[0])
             )
         )
     )

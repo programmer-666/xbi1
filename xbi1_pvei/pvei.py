@@ -1,7 +1,9 @@
 # pvei.py
 
-from urllib3 import disable_warnings
+import json
+from typing import Optional
 from proxmoxer import ProxmoxAPI
+from urllib3 import disable_warnings
 
 from .pvei_logger import log
 
@@ -23,11 +25,13 @@ class PVEInterface:
         # self.node gets random node from ProxmoxVE
         self.__pmox_api = proxmox_api
         self.node = self.__pmox_api.nodes.get()[0]
+        # random node
 
     @log
-    def change_node(self, node_id: int = 0) -> None:
+    def change_node(self, node: Optional[str] = None):
         # changes current node
-        self.node = self.__pmox_api.nodes.get()[node_id]
+        print(json.dumps(self.nodes(), indent=4))
+        self.node = self.nodes()[node]
         return self.node
 
     @log
@@ -115,5 +119,22 @@ class PVEInterface:
         }
 
     @log
-    def all_nodes(self):
-        nodes = self.__pmox_api.nodes.get()
+    def nodes(self):
+        return [
+            {
+                'id': node['id'],
+                'node': node['node'],
+                'status': node['status'],
+                'uptime': node['uptime'],
+                'type': node['type'],
+                'mem': node['mem'],
+                'cpu': node['cpu'],
+                'maxcpu': node['maxcpu'],
+                'disk': node['disk'],
+                'ssl_fingerprint': node['ssl_fingerprint'],
+                'level': node['level'],
+                'maxmem': node['maxmem'],
+                'maxdisk': node['maxdisk']
+            }
+            for node in self.__pmox_api.nodes.get()
+        ]

@@ -148,6 +148,46 @@ def em_basic_information(pvei_data: dict):
     return basic_information_embed
 
 
+def em_nodes(pvei_data: dict):
+    def nodes_field(n_info: dict):
+        result: str = ''
+
+        for nodes in n_info:
+            for info in nodes:
+                result += '- **' + info + ': **'
+                if info in ['maxmem', 'maxdisk']:
+                    result += str(togigabyte(nodes[info])) + '\n'
+                else:
+                    result += str(nodes[info]) + '\n'
+            result += '\n'
+
+        return result
+
+    nodes_embed = InformationalEmbed(
+        title='Nodes',
+        url=pvei_url,
+        description='All Nodes.',
+        timestamp=datetime.now()
+    )
+
+    nodes_embed.set_author(
+        name='XBI1 - Notification Bot',
+        url=author_url
+    )
+    nodes_embed.set_thumbnail()
+    nodes_embed.set_footer(
+        text='Proxmox'
+    )
+
+    nodes_embed.add_field(
+        name='All nodes in the cluster.',
+        value=nodes_field(pvei_data),
+        inline=False
+    )
+
+    return nodes_embed
+
+
 def em_all_machines(pvei_data: dict):
     def qemus_field(qemus_dict: dict):
         result: str = ''
