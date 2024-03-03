@@ -10,11 +10,6 @@ from __init__ import pvei, config
 from dc_messages import pveiembeds, pveimessages
 
 
-with open('dc_ids.json') as dcj_file:
-    dc_ids: dict = json.load(dcj_file)
-# dc_ids.json file holds guild and channel id's
-# bot interact channels with theese data
-
 with open('timed_tasks.json') as timet:
     t_tasks: dict = json.load(timet)
 # loads time and command data for scheduled tasks
