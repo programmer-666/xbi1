@@ -28,11 +28,14 @@ class PVEInterface:
         # random node
 
     @log
-    def change_node(self, node: Optional[str] = None):
+    def change_node(self, node_name: Optional[str] = None):
         # changes current node
-        print(json.dumps(self.nodes(), indent=4))
-        self.node = self.nodes()[node]
+        for node in self.nodes():
+            if node_name == node['node']:
+                self.node = node
+
         return self.node
+
 
     @log
     def proxmox_version(self) -> dict:

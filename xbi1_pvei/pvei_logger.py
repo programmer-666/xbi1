@@ -21,7 +21,7 @@ def log(function) -> Callable:
     def dec_f(*args) -> Callable:
         # global total_work_time
 
-        decf_start_time: time = time()
+        decf_start_time: float = time()
         f_var = function(*args)
 
         work_time: float = round(
