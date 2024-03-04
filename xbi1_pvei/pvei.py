@@ -1,6 +1,5 @@
 # pvei.py
 
-import json
 from typing import Optional
 from proxmoxer import ProxmoxAPI
 from urllib3 import disable_warnings
@@ -35,7 +34,6 @@ class PVEInterface:
                 self.node = node
 
         return self.node
-
 
     @log
     def proxmox_version(self) -> dict:
