@@ -124,20 +124,6 @@ class PVEInterface:
     @log
     def nodes(self):
         return [
-            {
-                'id': node['id'],
-                'node': node['node'],
-                'status': node['status'],
-                'uptime': node['uptime'],
-                'type': node['type'],
-                'mem': node['mem'],
-                'cpu': node['cpu'],
-                'maxcpu': node['maxcpu'],
-                'disk': node['disk'],
-                'ssl_fingerprint': node['ssl_fingerprint'],
-                'level': node['level'],
-                'maxmem': node['maxmem'],
-                'maxdisk': node['maxdisk']
-            }
+            node
             for node in self.__pmox_api.nodes.get()
         ]
