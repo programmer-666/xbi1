@@ -14,16 +14,16 @@ class InformationalEmbed(Embed):
         'author_name': 'XBI1 - Notification Bot',
         'author_url': 'https://github.com/programmer-666/xbi1',
         'author_icon_url': 'https://cdn.discordapp.com/app-icons/'
-        '1176948443839737996/4750381453e4a1b72513529c8cbe4423.png',
+        '1176948443839737996/36217f36e2b1a48abc673e2f480c4cce.png',
         'thumbnail': 'https://cdn.discordapp.com/attachments/121054285254'
         '7809320/1210543709913878638/information-image.png?ex='
         '65eaf1af&is=65d87caf&hm=a6dc8ba27b265d61bc773832650a69060'
         '0ade267c72ce54312a60c97a30b600f&',
         'image_url': 'https://cdn.discordapp.com/app-icons/'
-        '1176948443839737996/4750381453e4a1b72513529c8cbe4423.png',
+        '1176948443839737996/36217f36e2b1a48abc673e2f480c4cce.png',
         'footer_text': 'Footer',
         'footer_icon_url': 'https://cdn.discordapp.com/app-icons/'
-        '1176948443839737996/4750381453e4a1b72513529c8cbe4423.png'
+        '1176948443839737996/36217f36e2b1a48abc673e2f480c4cce.png'
     }
 
     def __init__(
@@ -122,16 +122,16 @@ class WarningEmbed(Embed):
         'author_name': 'XBI1 - Notification Bot',
         'author_url': 'https://github.com/programmer-666/xbi1',
         'author_icon_url': 'https://cdn.discordapp.com/app-icons/'
-        '1176948443839737996/4750381453e4a1b72513529c8cbe4423.png',
+        '1176948443839737996/36217f36e2b1a48abc673e2f480c4cce.png',
         'thumbnail': 'https://cdn.discordapp.com/attachments/12105428525'
         '47809320/1210574389800603698/warning-thumbnail.png?'
         'ex=65eb0e41&is=65d89941&hm=d5e20772ead94ed9ab58a5ce'
         '0ef9d40e9608f2e2d52e02e71c63463d61a43602&',
         'image_url': 'https://cdn.discordapp.com/app-icons/'
-        '1176948443839737996/4750381453e4a1b72513529c8cbe4423.png',
+        '1176948443839737996/36217f36e2b1a48abc673e2f480c4cce.png',
         'footer_text': 'Footer',
         'footer_icon_url': 'https://cdn.discordapp.com/app-icons/'
-        '1176948443839737996/4750381453e4a1b72513529c8cbe4423.png'
+        '1176948443839737996/36217f36e2b1a48abc673e2f480c4cce.png'
     }
 
     def __init__(
@@ -229,8 +229,8 @@ class SuccessEmbed(Embed):
         'title': 'Success Notification',
         'author_name': 'XBI1 - Notification Bot',
         'author_url': 'https://github.com/programmer-666/xbi1',
-        'author_icon_url': 'https://cdn.discordapp.com/app-icons/1176'
-        '948443839737996/4750381453e4a1b72513529c8cbe4423.png',
+        'author_icon_url': 'https://cdn.discordapp.com/app-icons/'
+        '1176948443839737996/36217f36e2b1a48abc673e2f480c4cce.png',
         'thumbnail': 'https://cdn.discordapp.com/attachments/12105428525478'
         '09320/1210578330697334845/success-stabil-thumbnail.png?'
         'ex=65eb11ed&is=65d89ced&hm=5a4aa7e146a126f9d63847'
@@ -239,7 +239,7 @@ class SuccessEmbed(Embed):
         '1176948443839737996/4750381453e4a1b72513529c8cbe4423.png',
         'footer_text': 'Footer',
         'footer_icon_url': 'https://cdn.discordapp.com/app-icons/'
-        '1176948443839737996/4750381453e4a1b72513529c8cbe4423.png'
+        '1176948443839737996/36217f36e2b1a48abc673e2f480c4cce.png'
     }
 
     def __init__(

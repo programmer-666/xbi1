@@ -25,7 +25,7 @@ class PVEInterface:
         # self.node gets random node from ProxmoxVE
         self.__pmox_api = proxmox_api
         self.node = self.__pmox_api.nodes.get()[0]
-        # random node
+        # random node (online)
 
     @log
     def change_node(self, node_name: Optional[str] = None):

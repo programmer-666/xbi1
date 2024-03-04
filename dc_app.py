@@ -167,8 +167,7 @@ async def timed_tasks() -> None:
 
 @bot.event
 async def on_ready():
-    # timed_tasks.start()
-    pass
+    timed_tasks.start()
 
 
 @bot.command(name='nodes')
