@@ -5,7 +5,7 @@ from table2ascii import table2ascii
 from .auxi_funcs import code_mark
 
 
-def all_machines_table(pvei_data: dict):
+def machines_table(pvei_data: dict):
     lxcs: list = pvei_data['lxcs']
     qemus: list = pvei_data['qemus']
 

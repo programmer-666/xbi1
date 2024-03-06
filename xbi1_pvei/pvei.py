@@ -41,15 +41,30 @@ class PVEInterface:
         return self.__pmox_api.version.get()
 
     @log
-    def basic_information(self) -> dict:
+    def proxmox_versions(self) -> list:
+        # Returns for all nodes ProxmoxVE version, repoid and release.
+        node_versions: list = []
+
+        for n in self.nodes():
+            node_versions.append(
+                [
+                    n['node'],
+                    self.__pmox_api.nodes(n['node']).version.get()['version']
+                ]
+            )
+
+        return node_versions
+
+    @log
+    def node_information(self) -> dict:
         # this function returns selected node's
         # maximum cpu, memory and disk usage
-        basic_info = self.node  # self.__pmox_api.nodes.get()[0]
+        node_info = self.node  # self.__pmox_api.nodes.get()[0]
         return {
-            'id': basic_info['id'],
-            'maxcpu': basic_info['maxcpu'],
-            'maxmem': basic_info['maxmem'],
-            'maxdisk': basic_info['maxdisk'],
+            'id': node_info['id'],
+            'maxcpu': node_info['maxcpu'],
+            'maxmem': node_info['maxmem'],
+            'maxdisk': node_info['maxdisk'],
         }
 
     @log

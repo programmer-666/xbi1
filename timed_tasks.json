@@ -1,7 +1,8 @@
 {
   "minutely": {
     "commands": [
-      "machines"
+      "machines",
+      "n_information"
     ],
     "channels": [
       1204366562266714164
@@ -9,7 +10,7 @@
   },
   "hourly": {
     "commands": [
-      "b_information"
+      "versions"
     ],
     "channels": [
       1204366562266714164

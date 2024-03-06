@@ -23,8 +23,8 @@ def em_messages_table() -> dict:
         "b_status": pveiembeds.em_basic_all_status(
             pvei.basic_all_status()
         ),
-        "b_information": pveiembeds.em_basic_information(
-            pvei.basic_information()
+        "n_information": pveiembeds.em_node_information(
+            pvei.node_information()
         ),
         "machines": pveiembeds.em_all_machines(
             pvei.all_machines()
@@ -34,7 +34,7 @@ def em_messages_table() -> dict:
 
 def messages_table() -> dict:
     return {
-        "mtables": pveimessages.all_machines_table(pvei.all_machines())
+        "mtables": pveimessages.machines_table(pvei.all_machines())
     }
 # embed messages dict for scheduled tasks
 
@@ -192,14 +192,14 @@ async def basic_all_status_report(ctx: commands.context.Context, *args):
 # takes embed message from dc_messages, pveiembeds
 
 
-@bot.command(name='b_information')
-async def basic_information_report(ctx: commands.context.Context, *args):
+@bot.command(name='n_information')
+async def node_information_report(ctx: commands.context.Context, *args):
     await ctx.send(
-        embed=pveiembeds.em_basic_information(
-            pvei.basic_information()
+        embed=pveiembeds.em_node_information(
+            pvei.node_information()
         )
     )
-# b_information sends information about node
+# n_information sends information about node
 
 
 @bot.command(name='machines')
@@ -212,10 +212,10 @@ async def all_lxcs(ctx: commands.context.Context, *args):
 # this command gets various data from lxc and qemu machines
 
 
-@bot.command(name='mtables')
-async def all_mtables(ctx: commands.context.Context, *args):
+@bot.command(name='machines_table')
+async def machines_table(ctx: commands.context.Context, *args):
     await ctx.send(
-        pveimessages.all_machines_table(
+        pveimessages.machines_table(
             pvei.all_machines()
         )
     )
@@ -228,6 +228,16 @@ async def version(ctx: commands.context.Context, *args):
     await ctx.send(
         embed=pveiembeds.em_proxmox_version(
             pvei.proxmox_version()
+        )
+    )
+# returns node's proxmox version
+
+
+@bot.command(name='versions')
+async def versions(ctx: commands.context.Context, *args):
+    await ctx.send(
+        embed=pveiembeds.em_proxmox_versions(
+            pvei.proxmox_versions()
         )
     )
 # returns node's proxmox version

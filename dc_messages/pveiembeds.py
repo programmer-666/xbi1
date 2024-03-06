@@ -111,8 +111,8 @@ def em_basic_all_status(pvei_data: dict):
     return basic_status_embed
 
 
-def em_basic_information(pvei_data: dict):
-    def basic_information_field(b_info: dict):
+def em_node_information(pvei_data: dict):
+    def node_information_field(b_info: dict):
         result: str = ''
 
         for info in b_info:
@@ -124,28 +124,28 @@ def em_basic_information(pvei_data: dict):
 
         return result
 
-    basic_information_embed = InformationalEmbed(
+    node_information_embed = InformationalEmbed(
         title='Proxmox Norification',
         url=pvei_url,
-        description='Basic Information about node.',
+        description='Basic Information current node.',
         timestamp=datetime.now()
     )
-    basic_information_embed.set_author(
+    node_information_embed.set_author(
         name='XBI1 - Notification Bot',
         url=author_url
     )
-    basic_information_embed.set_thumbnail()
-    basic_information_embed.set_footer(
+    node_information_embed.set_thumbnail()
+    node_information_embed.set_footer(
         text='Proxmox'
     )
 
-    basic_information_embed.add_field(
+    node_information_embed.add_field(
         name='Basic Information',
-        value=basic_information_field(pvei_data),
+        value=node_information_field(pvei_data),
         inline=False
     )
 
-    return basic_information_embed
+    return node_information_embed
 
 
 def em_nodes(pvei_data: dict):
@@ -230,6 +230,7 @@ def em_all_machines(pvei_data: dict):
         url=author_url
     )
     all_machines_embed.set_thumbnail()
+    all_machines_embed.set_image()
     all_machines_embed.set_footer(
         text='Proxmox'
     )
@@ -256,6 +257,31 @@ def em_proxmox_version(pvei_data: dict):
     version_embed = InformationalEmbed(
         title='Proxmox Version',
         description=desc_version(pvei_data),
+        timestamp=datetime.now()
+    )
+
+    version_embed.set_author()
+    version_embed.set_thumbnail()
+    version_embed.set_footer(
+        text="Proxmox"
+    )
+
+    return version_embed
+
+
+def em_proxmox_versions(pvei_data: list):
+    def desc_versions(pvei_data: list):
+        result: str = ''
+
+        for node in pvei_data:
+            result += '- **' + node[0] + '**: '
+            result += node[1] + '\n'
+
+        return result
+
+    version_embed = InformationalEmbed(
+        title='Proxmox Version',
+        description=desc_versions(pvei_data),
         timestamp=datetime.now()
     )
 
