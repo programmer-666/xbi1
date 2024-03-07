@@ -4,9 +4,10 @@ import logging.config
 from time import time
 from typing import Callable
 from logging import getLogger
+from os.path import abspath
 
 
-logging.config.fileConfig('../xbi1/log_conf.ini')
+logging.config.fileConfig(abspath('../xbi1/log_conf.ini'))
 logger = getLogger(__name__)
 
 
