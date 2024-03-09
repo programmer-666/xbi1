@@ -11,11 +11,14 @@ Firstly you need a private discord bot. If you want to share your server informa
  
 <img width="1102" alt="dc_appliaction_setting" src="https://github.com/programmer-666/xbi1/assets/34501436/86df32af-86dc-4ee6-ac8b-d3bc4774d219">
 
-## Installation & Run
+## Installation & Before Running
 Clone this repo, create a virtual environment or directly install modules needed.
 
 ```
-git clone https://github.com/programmer-666/xbi1.git
+git clone https://github.com/programmer-666/xbi1.git &&
+cd xbi1 &&
+virtualenv .venv &&
+source .venv/bin/activate &&
 pip install -r requirements.txt
 ```
 
@@ -29,6 +32,30 @@ host= <proxmox_node_ip>
 user= <proxmox_user_and_site>
 password= <proxmox_user_password>
 ```
+The `timed_tasks.json` file is the important. With the edits you make in this file, the bot will transmit the data to the channels you want.
+
+```
+{
+  "minutely": {
+    "commands": [],
+    "channels": []
+  },
+  "hourly": {
+    "commands": [],
+    "channels": []
+  },
+  "monthly": {
+    "commands": [],
+    "channels": []
+  },
+  "yearly": {
+    "commands": [],
+    "channels": []
+  }
+}
+```
+You can find detailed information about the commands here ...
+
 
 All you have to do is write this code to run the bot.
 ```
