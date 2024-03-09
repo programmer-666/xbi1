@@ -1,20 +1,11 @@
 {
   "minutely": {
-    "commands": [
-      "machines",
-      "n_information"
-    ],
-    "channels": [
-      1204366562266714164
-    ]
+    "commands": [],
+    "channels": []
   },
   "hourly": {
-    "commands": [
-      "versions"
-    ],
-    "channels": [
-      1204366562266714164
-    ]
+    "commands": [],
+    "channels": []
   },
   "monthly": {
     "commands": [],

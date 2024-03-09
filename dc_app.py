@@ -165,12 +165,26 @@ async def timed_tasks() -> None:
 # this is look not good but now it works, will be update...
 
 
+class MainCog(commands.Cog):
+    def __init__(self, bot) -> None:
+        self.bot = bot
+
+    @commands.command(name='nodes')
+    async def nodes(self, ctx, *args):
+        await ctx.send(
+            embed=pveiembeds.em_nodes(
+                pvei.nodes()
+            )
+        )
+
+
 @bot.event
 async def on_ready():
+    await bot.add_cog(MainCog(bot=bot))
     timed_tasks.start()
 
 
-@bot.command(name='nodes')
+"""@bot.command(name='nodes')
 async def nodes(ctx: commands.context.Context, *args):
     await ctx.send(
         embed=pveiembeds.em_nodes(
@@ -178,7 +192,7 @@ async def nodes(ctx: commands.context.Context, *args):
         )
     )
 # b_status command sends basicly embed report
-# takes embed message from dc_messages, pveiembeds
+# takes embed message from dc_messages, pveiembeds"""
 
 
 @bot.command(name='b_status')
