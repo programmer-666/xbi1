@@ -28,3 +28,9 @@ host= <proxmox_node_ip>
 user= <proxmox_user_and_site>
 password= <proxmox_user_password>
 ```
+
+## Running
+All you have to do is write this code to run the bot.
+```
+python3 dc_app.py
+```
