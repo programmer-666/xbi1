@@ -1,13 +1,19 @@
 # xbi1_pvei.pvei_logger.py
-# :scc:1:1002:
+
 import logging.config
+from os import path
 from time import time
 from typing import Callable
 from logging import getLogger
-from os.path import abspath
 
 
-logging.config.fileConfig(abspath('../xbi1/log_conf.ini'))
+logging.config.fileConfig(
+    path.join(
+        path.dirname(
+            path.abspath(__file__)
+        ), 'log_conf.ini'
+    )
+)
 logger = getLogger(__name__)
 
 

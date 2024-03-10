@@ -37,7 +37,7 @@ def em_messages_table() -> dict:
 
 def messages_table() -> dict:
     return {
-        "mtables": pveimessages.machines_table(pvei.all_machines())
+        "machines_table": pveimessages.machines_table(pvei.all_machines())
     }
 # embed messages dict for scheduled tasks
 
