@@ -54,7 +54,7 @@ The `timed_tasks.json` file is the important. With the edits you make in this fi
   }
 }
 ```
-You can find detailed information about the commands here [commands.md](https://github.com/programmer-666/xbi1/blob/master/commands.md)
+You can find detailed information about the commands here [commands](https://github.com/programmer-666/xbi1/blob/master/commands.md)
 
 
 All you have to do is write this code to run the bot.

@@ -28,6 +28,9 @@ def em_messages_table() -> dict:
         ),
         "machines": pveiembeds.em_all_machines(
             pvei.all_machines()
+        ),
+        "nodes": pveiembeds.em_nodes(
+            pvei.nodes()
         )
     }
 
@@ -171,9 +174,93 @@ class MainCog(commands.Cog):
 
     @commands.command(name='nodes')
     async def nodes(self, ctx, *args):
+        """
+        Gives information for all nodes.
+        """
         await ctx.send(
             embed=pveiembeds.em_nodes(
                 pvei.nodes()
+            )
+        )
+
+    @commands.command(name='b_status')
+    async def basic_all_status_report(self, ctx, *args):
+        """
+        b_status command sends basicly embed report
+        takes embed message from dc_messages, pveiembeds
+        """
+        await ctx.send(
+            embed=pveiembeds.em_basic_all_status(
+                pvei.basic_all_status()
+            )
+        )
+
+    @commands.command(name='n_information')
+    async def node_information_report(self, ctx, *args):
+        """
+        n_information sends information about node
+        """
+        await ctx.send(
+            embed=pveiembeds.em_node_information(
+                pvei.node_information()
+            )
+        )
+
+    @commands.command(name='machines')
+    async def all_lxcs(self, ctx, *args):
+        """
+        this command gets various data from lxc and qemu machines
+        """
+        await ctx.send(
+            embed=pveiembeds.em_all_machines(
+                pvei.all_machines()
+            )
+        )
+
+    @commands.command(name='machines_table')
+    async def machines_table(self, ctx, *args):
+        """
+        sends information about lxc and qemu machines
+        but not embed, ascii table with code marks ```
+        """
+        await ctx.send(
+            pveimessages.machines_table(
+                pvei.all_machines()
+            )
+        )
+
+    @commands.command(name='version')
+    async def version(self, ctx, *args):
+        """
+        returns node's proxmox version
+        """
+        await ctx.send(
+            embed=pveiembeds.em_proxmox_version(
+                pvei.proxmox_version()
+            )
+        )
+
+    @commands.command(name='versions')
+    async def versions(self, ctx, *args):
+        """
+        returns node's proxmox version
+        """
+        await ctx.send(
+            embed=pveiembeds.em_proxmox_versions(
+                pvei.proxmox_versions()
+            )
+        )
+
+    @commands.command(name='ch_node')
+    async def ch_node(self, ctx, *args):
+        """
+        changes active node
+        """
+        await ctx.send(
+            str(
+                pvei.change_node(
+                    str(args[0])
+                )
             )
         )
 
@@ -183,89 +270,5 @@ async def on_ready():
     await bot.add_cog(MainCog(bot=bot))
     timed_tasks.start()
 
-
-"""@bot.command(name='nodes')
-async def nodes(ctx: commands.context.Context, *args):
-    await ctx.send(
-        embed=pveiembeds.em_nodes(
-            pvei.nodes()
-        )
-    )
-# b_status command sends basicly embed report
-# takes embed message from dc_messages, pveiembeds"""
-
-
-@bot.command(name='b_status')
-async def basic_all_status_report(ctx: commands.context.Context, *args):
-    await ctx.send(
-        embed=pveiembeds.em_basic_all_status(
-            pvei.basic_all_status()
-        )
-    )
-# b_status command sends basicly embed report
-# takes embed message from dc_messages, pveiembeds
-
-
-@bot.command(name='n_information')
-async def node_information_report(ctx: commands.context.Context, *args):
-    await ctx.send(
-        embed=pveiembeds.em_node_information(
-            pvei.node_information()
-        )
-    )
-# n_information sends information about node
-
-
-@bot.command(name='machines')
-async def all_lxcs(ctx: commands.context.Context, *args):
-    await ctx.send(
-        embed=pveiembeds.em_all_machines(
-            pvei.all_machines()
-        )
-    )
-# this command gets various data from lxc and qemu machines
-
-
-@bot.command(name='machines_table')
-async def machines_table(ctx: commands.context.Context, *args):
-    await ctx.send(
-        pveimessages.machines_table(
-            pvei.all_machines()
-        )
-    )
-# sends information about lxc and qemu machines
-# but not embed, ascii table with code marks ```
-
-
-@bot.command(name='version')
-async def version(ctx: commands.context.Context, *args):
-    await ctx.send(
-        embed=pveiembeds.em_proxmox_version(
-            pvei.proxmox_version()
-        )
-    )
-# returns node's proxmox version
-
-
-@bot.command(name='versions')
-async def versions(ctx: commands.context.Context, *args):
-    await ctx.send(
-        embed=pveiembeds.em_proxmox_versions(
-            pvei.proxmox_versions()
-        )
-    )
-# returns node's proxmox version
-
-
-@bot.command(name='ch_node')
-async def ch_node(ctx: commands.context.Context, *args):
-    await ctx.send(
-        str(
-            pvei.change_node(
-                str(args[0])
-            )
-        )
-    )
-# changes active node
 
 bot.run(config['DISCORD']['bot_token'])
