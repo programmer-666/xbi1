@@ -6,5 +6,5 @@
 | machines       | LXC & Qemus infos and statistics.                  |
 | machines_table | Same data with machines command but data in table. |
 | version        | Current nodes version.                             |
-| Versions       | Version info for all nodes.                        |
+| versions       | Version info for all nodes.                        |
 | ch_node        | Changes current node.                              |
