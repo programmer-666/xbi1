@@ -54,8 +54,9 @@ The `timed_tasks.json` file is the important. With the edits you make in this fi
   }
 }
 ```
-You can find detailed information about the commands here [commands](https://github.com/programmer-666/xbi1/blob/master/commands.md)
+You can find detailed information about the commands here [commands](https://github.com/programmer-666/xbi1/blob/master/commands.md). You need to copy the ID of the channel to which notifications will be sent and paste it into "channels".
 
+![image](https://github.com/programmer-666/xbi1/assets/34501436/98e0f838-b64c-4e69-8392-ad44e6bafb14)
 
 All you have to do is write this code to run the bot.
 ```
