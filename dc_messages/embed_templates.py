@@ -1,7 +1,7 @@
 # embed_templates.py
 
 from discord import Embed
-from typing import Optional, Any, Self
+from typing_extensions import Optional, Any, Self
 from datetime import datetime
 
 
