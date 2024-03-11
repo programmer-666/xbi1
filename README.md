@@ -72,7 +72,7 @@ python3 dc_app.py
 
 # Logs
 
-A simple logging program is running here that logs the classes or methods called.
+A simple logging program is running here that logs the classes or methods called. Logs saved `/tmp` location.
 
 Logs format is:\
 `%(asctime)s::%(name)s::%(levelname)s::[%(processName)s::%(process)d]::[%(threadName)s::%(thread)d]::%(message)s`
