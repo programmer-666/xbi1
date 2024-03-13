@@ -7,7 +7,7 @@ from datetime import datetime
 from discord.ext import commands, tasks
 
 from __init__ import pvei, config
-from dc_messages import pveiembeds, pveimessages
+from dc_messages import pveiembeds
 
 
 with open('timed_tasks.json') as timet:
@@ -33,13 +33,6 @@ def em_messages_table() -> dict:
             pvei.nodes()
         )
     }
-
-
-def messages_table() -> dict:
-    return {
-        "machines_table": pveimessages.machines_table(pvei.all_machines())
-    }
-# embed messages dict for scheduled tasks
 
 
 intents = discord.Intents.default()
@@ -76,17 +69,6 @@ async def timed_tasks() -> None:
                         )
         # for embed messages
 
-        for command in messages_table():
-            for sce_command in t_tasks['yearly']['commands']:
-                if command == sce_command:
-                    for channel in t_tasks['yearly']['channels']:
-                        notf_channel = bot.get_channel(channel)
-                        await bot.wait_until_ready()
-                        await notf_channel.send(
-                            messages_table()[command]
-                        )
-        # for not embed messages
-
     if datetime.now().month > dtime.month:
         dtime = datetime.now()
 
@@ -100,17 +82,6 @@ async def timed_tasks() -> None:
                             embed=em_messages_table()[command]
                         )
         # for embed messages
-
-        for command in messages_table():
-            for sce_command in t_tasks['monthly']['commands']:
-                if command == sce_command:
-                    for channel in t_tasks['monthly']['channels']:
-                        notf_channel = bot.get_channel(channel)
-                        await bot.wait_until_ready()
-                        await notf_channel.send(
-                            messages_table()[command]
-                        )
-        # for not embed messages
 
     if datetime.now().hour > dtime.hour:
         dtime = datetime.now()
@@ -126,17 +97,6 @@ async def timed_tasks() -> None:
                         )
         # for embed messages
 
-        for command in messages_table():
-            for sce_command in t_tasks['minutely']['commands']:
-                if command == sce_command:
-                    for channel in t_tasks['minutely']['channels']:
-                        notf_channel = bot.get_channel(channel)
-                        await bot.wait_until_ready()
-                        await notf_channel.send(
-                            messages_table()[command]
-                        )
-        # for not embed messages
-
     if datetime.now().minute > dtime.minute:
         dtime = datetime.now()
 
@@ -150,17 +110,6 @@ async def timed_tasks() -> None:
                             embed=em_messages_table()[command]
                         )
         # for embed messages
-
-        for command in messages_table():
-            for sce_command in t_tasks['minutely']['commands']:
-                if command == sce_command:
-                    for channel in t_tasks['minutely']['channels']:
-                        notf_channel = bot.get_channel(channel)
-                        await bot.wait_until_ready()
-                        await notf_channel.send(
-                            messages_table()[command]
-                        )
-        # for not embed messages
 
 
 # t_tasks function works every 1 second
@@ -213,18 +162,6 @@ class MainCog(commands.Cog):
         """
         await ctx.send(
             embed=pveiembeds.em_all_machines(
-                pvei.all_machines()
-            )
-        )
-
-    @commands.command(name='machines_table')
-    async def machines_table(self, ctx, *args):
-        """
-        sends information about lxc and qemu machines
-        but not embed, ascii table with code marks ```
-        """
-        await ctx.send(
-            pveimessages.machines_table(
                 pvei.all_machines()
             )
         )

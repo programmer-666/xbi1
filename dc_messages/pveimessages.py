@@ -1,10 +1,10 @@
 # pveimessages.py
 
-from table2ascii import table2ascii
+# from table2ascii import table2ascii
 
-from .auxi_funcs import code_mark
+# from .auxi_funcs import code_mark
 
-
+"""
 def machines_table(pvei_data: dict):
     lxcs: list = pvei_data['lxcs']
     qemus: list = pvei_data['qemus']
@@ -26,3 +26,4 @@ def machines_table(pvei_data: dict):
 
     return code_mark(':LXC MACHINES:\n' + lxc_table) \
         + code_mark(':QEMU MACHINES:\n' + qemu_table)
+"""
