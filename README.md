@@ -9,9 +9,10 @@ xBi_1 is a discord bot that allows you to quickly access various information abo
 
 ## About Discord Bot
 
-Firstly you need a private discord bot. If you want to share your server information with everyone, you will not need to turn off this option.
+Firstly you need a private discord bot.
 
 <img width="1102" alt="dc_appliaction_setting" src="https://github.com/programmer-666/xbi1/assets/34501436/86df32af-86dc-4ee6-ac8b-d3bc4774d219">
+If you want to share your server information with everyone, you will not need to turn off this option.
 
 ## Installation & Before Running
 
